@@ -1,0 +1,216 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>编辑文章</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.all.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/article_edit.js') }}"></script>
+{% endblock scripts %}
+{% block content %}
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-lg">编辑</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+            <hr>
+            {% if article %}
+                <form class="am-form" id="article">
+                    <input id="id" type="hidden" value="{{ article.id }}">
+                    <div class="am-tabs am-margin" data-am-tabs>
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                            <div class="am-g am-margin-top am-form-group">
+
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">所属类别</div>
+                                <div class="am-u-sm-8 am-u-md-10">
+                                    <select class="s-type" data-am-selected="{btnSize: 'sm'}" required>
+                                        {% for type in article_types %}
+                                            <option value="{{ type.id }}" {% if type.id==article.type_id %}
+                                                    selected="selected" {% endif %}>{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab2">
+                            <div class="am-g am-margin-top am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    文章标题
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4">
+                                    <input class="title" type="text" class="am-input-sm" required
+                                           value="{{ article.title }}">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    文章封面
+                                </div>
+                                <div class="am-u-sm-10 am-md-4 am-form-group">
+                                    {% if article.img %}
+                                        <input id="file_cover" type="file" class="am-input-sm"
+                                               data-img-src="{{ article.img }}" value="{{ article.img }}">
+                                        <img width="200" src="{{ article.img }}" data-img-src="{{ article.img }}">
+                                    {% else %}
+                                        <input id="file_cover" type="file" class="am-input-sm">
+                                    {% endif %}
+                                </div>
+                                <span id="img-src" style="display: none;">{{ article.img }}</span>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm">
+                                <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">
+                                    文章内容
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-10 am-form-group">
+                                    <textarea class="am-validate am-u-sm-12 am-u-md-5" id="detail"
+                                              name="detail">{{ article.content }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab3">
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 标题
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <input type="text" class="am-input-sm seo-title"
+                                           value="{{ article.seo_title }}">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 关键字
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <input type="text" class="am-input-sm seo-key" value="{{ article.seo_keywords }}">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 描述
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <textarea class="seo-dec">{{ article.seo_description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-margin" style="margin-left: 25.4rem;">
+                        <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+                        <button type="reset" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+                    </div>
+
+                </form>
+            {% else %}
+                <form class="am-form" id="article">
+                    <div class="am-tabs am-margin" data-am-tabs>
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                            <div class="am-g am-margin-top am-form-group">
+
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">所属类别<input hidden="hidden" name="id"
+                                                                                          value=""></div>
+                                <div class="am-u-sm-8 am-u-md-10">
+                                    <select class="s-type" data-am-selected="{btnSize: 'sm'}" required>
+                                        {% for type in article_types %}
+                                            <option value="{{ type.id }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab2">
+                            <div class="am-g am-margin-top am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    文章标题
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4">
+                                    <input class="title" type="text" class="am-input-sm" required>
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    文章封面
+                                </div>
+                                <div class="am-u-sm-10 am-md-4 am-form-group">
+                                    <input id="file_cover" type="file" class="am-input-sm">
+                                </div>
+                                <span id="img-src" style="display: none;"></span>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm">
+                                <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">
+                                    文章内容
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-10 am-form-group">
+                                    <textarea class="am-validate am-u-sm-12 am-u-md-5" id="detail"
+                                              name="detail"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-tab-panel am-fade am-in am-active" id="tab3">
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 标题
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <input type="text" class="am-input-sm seo-title">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 关键字
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <input type="text" class="am-input-sm seo-key">
+                                </div>
+                            </div>
+
+                            <div class="am-g am-margin-top-sm am-form-group">
+                                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                                    SEO 描述
+                                </div>
+                                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                                    <textarea class="seo-dec"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-margin" style="margin-left: 25.4rem;">
+                        <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+                        <button type="reset" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+                    </div>
+
+                </form>
+            {% endif %}
+
+        </div>
+
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+        </footer>
+    </div>
+    <!-- content end -->
+{% endblock content %}

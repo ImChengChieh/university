@@ -1,0 +1,38 @@
+{% macro pagination_widget(pagination,endpoint) %}
+    {% if pagination.pages > 1 %}
+        <ul class="pager pager_list clear fr">
+            <li {% if pagination.has_prev==False or pagination.page==1 %} class="disabled"
+                                                                          {% else %}class="first"{% endif %} >
+                <a href="{% if pagination.has_prev==False or pagination.page==1 %}javascript:;{% else %}{{ url_for(endpoint,page=1, **kwargs) }}{% endif %}">首页</a>
+            </li>
+            <li {% if not pagination.has_prev %} class="disabled" {% endif %} class="prev_page">
+                <a href="
+                        {% if pagination.has_prev %}{{ url_for(endpoint,page=pagination.page - 1 ,**kwargs) }}{% else %}javascript:;{% endif %}"><<</a>
+            </li>
+            {% for p in pagination.iter_pages() %}
+                {% if p %}
+                    {% if p==pagination.page %}
+                        <li class="disabled on"><a href="javascript:;" disabled>{{ p }}</a></li>
+                    {% else %}
+                        <li class="page"><a href="{{ url_for(endpoint,page=p,**kwargs) }}">{{ p }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="disabled"><a href="javascript:;">&hellip;</a></li>
+                {% endif %}
+            {% endfor %}
+            <li{% if not pagination.has_next %} class="disabled"{% else %} class="next_page" {% endif %}>
+                <a href="
+                        {% if pagination.has_next %}{{ url_for(endpoint,  page=pagination.page + 1,**kwargs ) }}{% else %}javascript:;{% endif %}">
+                    &gt;&gt;</a>
+            </li>
+
+            <li{% if not pagination.has_next %} class="disabled"{% else %} class="last" {% endif %}>
+                <a href="
+                        {% if pagination.has_next %}{{ url_for(endpoint,  page=pagination.pages,**kwargs ) }}{% else %}javascript:;{% endif %}">尾页</a>
+            </li>
+        </ul>
+    {% endif %}
+    {% if not pagination.total %}
+        暂无记录!
+    {% endif %}
+{% endmacro %}

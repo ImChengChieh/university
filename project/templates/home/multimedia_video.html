@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会"/>
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <!--照片视频-->
+    <div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="">照片视频</a></p>
+    </div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position:-411px -12px;"></div>
+                <p>照片视频</p>
+            </div>
+            <ul id="column_">
+                <li><a href="{{ url_for('project.main.multimedia_photo') }}">照片专栏</a></li>
+                <li class="on"><a href="javascript:;">视频专栏</a></li>
+            </ul>
+        </div>
+        <!--照片视频>视频专栏-->
+        <div class="w1001 fr" id="video_column">
+            <p class="w1001_p">视频专栏</p>
+            <div class="w843 clear" style="margin-top: 20px;border: none;margin-bottom: 80px;">
+                {% for activ in activs %}
+                    {% if activ.vedio %}
+                        <div class="video-b" style="float: left; margin-left:40px;margin-top: 50px;">
+                            <a href="{{ url_for('project.main.video_gather',activ_id=activ.id) }}">
+                                <div class="video-a">
+                                    <div class="mask" style="display: none"></div>
+                                    <div class="mask1" style="display: none"></div>
+                                    <img src="{{ url_for('static',filename='images/video_img4.jpg') }}"/>
+                                </div>
+                            </a>
+                            <p>
+                                <a href="{{ url_for('project.main.video_gather',activ_id=activ.id) }}">{{ activ.vedio[0].title }}</a><span>视频共{{ activ.vedio|length }}份</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(6)
+        };
+        $(function () {
+            $('.video-b').on('mouseenter', '.video-a', function () {
+                $(this).find('.mask').show();
+                $(this).find('.mask1').show();
+            });
+            $('.video-b').on('mouseleave', '.video-a', function () {
+                $(this).find('.mask').hide();
+                $(this).find('.mask1').hide();
+            })
+        });
+    </script>
+{% endblock %}
+

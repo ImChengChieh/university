@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+    <div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="">个人中心</a><a
+            href="home/activity_apply.html"></a></p></div>
+    <!--个人中心-->
+    <div class="w1200 clear mt10">
+        <!--左导航-->
+        <div class="w176" style="display: inline-block;">
+            <div class="nav_new">
+                <div style="background: url(../static/images/u1.png) no-repeat 10px 2px;"></div>
+                <p>个人中心</p>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('project.main.index_modify',id=current_user.id) }}">个人入会信息</a></li>
+                <li class="on"><a href="{{ url_for('project.main.index_enterprise',id=current_user.id) }}">企业入会信息</a>
+                </li>
+                <li><a href="{{ url_for('project.main.index_password') }}">密码修改</a></li>
+            </ul>
+        </div>
+
+        <!--企业入会信息-->
+        <div class="w1002 fr index_register" style="margin-top: 0;">
+            <p class="w1001_p">企业入会信息</p>
+            {% if company_detail %}
+                {% for company_detail in company_detail %}
+                {% if company_detail.verify == 1 %}
+                     <img class="img-object" src="{{ url_for('static',filename='images/verify_1.png') }}">
+                 {% else %}
+                    <img class="img-object" src="{{ url_for('static',filename='images/verify_2.png') }}">
+                {% endif %}
+                    <table class="table-msg" borderColor=#ddd border=1 cellSpacing=0 align=center width="90%" style="margin-top: 20px">
+                        <tbody>
+                        <tr>
+                            <td><b>校友企业名称</b></td>
+                            <td>{{ company_detail.CoporateName }}</td>
+                            <td><b>企业法人代表</b></td>
+                            <td>{{ company_detail.CoporatePerson }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>企业所在地</b></td>
+                            <td>{{ company_detail.province }}{{ company_detail.city }}</td>
+                            <td><b>公司规模</b></td>
+                            <td>
+                                {% if company_detail.CoporateScale|int  == 1 %}
+                                    <span>大型</span>
+                                {% elif company_detail.CoporateScale|int  == 2 %}
+                                    <span>中型</span>
+                                {% elif company_detail.CoporateScale|int  == 3 %}
+                                    <span>小型</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>企业性质</b></td>
+                              <td>
+                                    {% if company_detail.corProperty|int  == 1 %}
+                                        <span>全民</span>
+                                    {% elif company_detail.corProperty|int  == 2 %}
+                                        <span>集体</span>
+                                    {% elif company_detail.corProperty|int  == 3 %}
+                                        <span>股份</span>
+                                    {% elif company_detail.corProperty|int  == 4 %}
+                                        <span>私营</span>
+                                    {% elif company_detail.corProperty|int  == 5 %}
+                                        <span>外商投资</span>
+                                    {% endif %}
+                              </td>
+                              <td><b>联络人</b></td>
+                              <td>{{ company_detail.contact }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>企业类型</b></td>
+                            <td>
+                                {% if company_detail.type|int == 1 %}
+                                    <span>工业</span>
+                                {% elif company_detail.type|int == 2 %}
+                                    <span>建筑业</span>
+                                {% elif company_detail.type|int == 3 %}
+                                    <span>批发和零售业</span>
+                                {% elif company_detail.type|int == 4 %}
+                                    <span>交通运输、邮政业</span>
+                                {% elif company_detail.type|int == 5 %}
+                                    <span>住宿和餐饮业</span>
+                                {% endif %}
+                            </td>
+                            <td><b>联系电话</b></td>
+                            <td>{{ company_detail.phone }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>企业简介</b></td>
+                            <td colSpan=3>{{ company_detail.CoporateIntro }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                        <br />
+                        <br />
+                        <hr />
+                        <br />
+                {% endfor %}
+                <div>
+                    <a style="color: red;margin-bottom: 30px; float: right;" href="{{ url_for('project.main.CorporateMember') }}"> >>增加新企业！</a>
+                </div>
+            {% else %}
+                <div class="l_messge">
+                    <p style="margin-bottom: 110px;"><a href="{{ url_for('project.main.CorporateMember') }}">您未入会？,登记<span
+                            style="color: red;">入会</span></a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!--页尾-->
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+

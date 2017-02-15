@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/simple.slide.css") }}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+		<!--照片视频-->
+		<div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="{{ url_for('project.main.multimedia_photo') }}">照片视频</a> > <a href="javascript:void(0)">照片专辑</a></p></div>
+		<div class="w1200 clear mt10">
+			<div class="w176 fl">
+				<div class="nav_new">
+					<div style="background-position:-411px -12px;"></div>
+					<p>照片视频</p>
+				</div>
+				<ul id="column_">
+					<li class="on"><a href="javascript:;">照片专栏</a></li>
+					<li><a href="{{ url_for('project.main.multimedia_video') }}">视频专栏</a></li>
+				</ul>
+			</div>
+			    <!--照片视频>照片专栏-->
+			    <div class="w1001 fr" id="picture_column" style="padding-bottom: 50px;">
+					<p class="w1001_p">照片专辑</p>
+					<div class="w875 clear" style="margin-top: 40px;margin-bottom: 30px;">
+                        {% for photo in activ_pic.photo %}
+				        <div style="width: 380px;">
+                              <div>
+                                  <a style="" href="javascript:;" i="{{ url_for('static',filename='upload/'+photo.photo) }}" class="one"><img src="{{ url_for('static',filename='upload/'+photo.photo) }}" style="width:100%;transition: 1s;"/></a>
+                              </div>
+                              <p  style="margin-top: 5px;padding-right: 0;text-align: center;">{{ photo.title }}</p>
+				        </div>
+                        {% endfor %}
+                    </div>
+				</div>	   
+		 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for("static", filename="js/simple.slide.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(6)
+        };
+        $('.one').simpleSlide();
+    </script>
+{% endblock %}

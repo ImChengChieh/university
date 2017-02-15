@@ -1,0 +1,17 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    {{ super() }}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}{{ form.username.data }}{{ form.username.errors[0] }}<br>
+        {{ form.password.label }}{{ form.password(id='password') }}{{ form.password.errors[0] }}<br>
+        {{ form.name.label }}{{ form.name(id='name') }}{{ form.name.errors[0] }}<br>
+        {{ form.role.label }}{{ form.role(value=form.role.data) }}<br>
+        {{ form.location.label }}{{ form.location(id='location') }}{{ form.location.errors[0] }}<br>
+        {{ form.about_me.label }}{{ form.about_me(id='about_me') }}<br>
+        {{ form.submit() }}<input type="reset">
+
+    </form>
+
+{% endblock %}

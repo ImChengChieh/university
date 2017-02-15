@@ -1,0 +1,25 @@
+<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+        <li class="am-dropdown" data-am-dropdown>
+            {% if not current_user.is_authenticated %}
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="{{ url_for('project.admin.login') }}">
+                    <span class="am-icon-users"></span> 未登陆 <span class="am-icon-caret-down"></span>
+                </a>
+            {% else %}
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-users"></span> {{ current_user.username }} <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li>
+                        <a href="{{ url_for('project.admin.modify_admin') }}"><span class="am-icon-key"></span> 修改密码</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('project.admin.logout') }}"><span class="am-icon-power-off"></span> 退出</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </li>
+        <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span
+                class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+    </ul>
+</div>

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+	 <!--登录界面-->
+	 <div class="index_register w1200 clear">
+	 	<p>登录账号</p>
+	 	<div class="w520 fl">
+	 		<div class="w252 fl">
+	 			<img src="{{ url_for("static", filename="images/register_img1.jpg") }}" />
+	 			<img src="{{ url_for("static", filename="images/register_img4.jpg") }}" />
+	 		</div>
+	 		<div class="w264 fr">
+	 			<img src="{{ url_for("static", filename="images/register_img2.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img3.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img5.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img6.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img7.jpg") }}" />
+	 		</div>
+	 		<div class="clear"></div>
+	 	</div>
+	 	<div class="w410">
+            <div class = "container" style="margin-left: 25px;color: red;">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning" style="width: 100%;height: 10px;">
+                        <i class="iconfont" style="color: green;">&#xe60d;</i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="margin-left: 25px;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+            {% endfor %}
+	 		<form action="" method="POST" class="index_register_form mt75" id="register_" onsubmit="return checkes_enter()">
+	 		   <p><span>*</span>账号：
+                   {{ form.username(id="user",placeholder="请输入你的账号",onblur="user_blur()",onfocus="user_focus()") }}
+{#                   <input type="text" name="user" id="user" placeholder="请输入你的账号" onblur="user_blur()" onfocus="user_focus()"/>#}
+                   <samp></samp></p>
+	 		   <p ><span>*</span>密码：
+                   {{ form.password(id="password",placeholder="请输入你的密码",onblur="password_blur()",onfocus="password_focus()") }}
+{#                   <input type="password" name="password" id="password" placeholder="请输入你的密码" onblur="password_blur()" onfocus="password_focus()"/><samp></samp></p><a href="#" class="forget_password">忘记密码</a>	 		  #}
+                <samp></samp></p>
+	 		   <p class="index_enter_submit">
+                    {{ form.submit() }}
+{#                <input type="submit" value="登录"/>#}
+                </p>
+	 		   <p class="rg_user">还没有账号？<a href="{{ url_for('project.main.index_register') }}">立即注册</a></p>
+                {{ form.hidden_tag() }}
+	 		</form>
+	 	</div>	
+	 </div>
+	 <!--页尾-->
+{% endblock %}
+<!-- End content -->
+
+<!-- footer Start -->
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+<!-- End footer-->

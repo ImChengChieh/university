@@ -1,0 +1,12 @@
+# ignore .idea folder
+.idea/
+*.pyc
+localbin/
+*.less
+**/uploads/
+venv/
+*.log
+.DS_Store
+project/static/upload/*
+project/static/ueditor/*
+migrations/

@@ -1,0 +1,175 @@
+{% extends "admin/base.html" %}
+{% import '_macros.html' as macros %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>管理员操作日志列表</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{% endblock scripts %}
+{% block style %}
+    {{ super() }}
+    <style>
+        ul, li {
+            list-style: none;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #033a95;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: normal;
+            line-height: 35px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .list_box {
+            margin: 35px auto;
+        }
+
+        .article_list {
+            margin-bottom: 50px;
+        }
+
+        .article_list li {
+            border-bottom: 1px solid #ececec;
+            padding-bottom: 20px
+        }
+
+        .article_title {
+            margin: 25px auto 10px auto;
+        }
+
+        .article_title > span {
+            display: block;
+            font-size: 16px
+        }
+
+        .article {
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        .pager > li {
+            float: left;
+            margin: 5px 2px
+        }
+        .clear{clear: both;overflow: hidden;}
+    </style>
+{% endblock %}
+{% block content %}
+
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">日志列表</strong> /
+                    <small>admin</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-6">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+
+                        </div>
+                    </div>
+                </div>
+                <form id="query_form" class="clear" method="post" action="{{ url_for('project.admin.logs') }}">
+                    <div class="am-u-sm-12 am-u-md-3 clear fl" style="width: 300px;padding-bottom: 10px;">{{ querlogsform.hidden_tag() }}
+                        <div>
+                            开始日期 : {{ querlogsform.date1(id='date1') }}{{ querlogsform.date1.errors[0] }}
+                          <div style="margin-top: 20px;">
+                            结束日期 : {{ querlogsform.date2(id='date2') }}{{ querlogsform.date2.errors[0] }}</div>
+                        </div>
+                          <div class="am-form-group" style="margin-top: 20px;">
+                           操作类型 : {{ querlogsform.operration_type(value=querlogsform.operration_type.data) }}
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-3 clear" style="width: 500px;">
+                        <div class="am-input-group am-input-group-sm">
+                            <p style="width:290px;clear: both;overflow: hidden;margin-left: 18px;"><span style="float: left">备&nbsp;&nbsp;&nbsp;注 :&nbsp;  </span>{{ querlogsform.remarks(id="keywords",type="text",class="am-form-field",style='width:170px;height:27px;') }}
+
+                            {{ querlogsform.submit(id='query_sub',style='float:right;') }}</p>
+                             <div style="margin-top: 20px;margin-left: 17px;">
+                           操作员 : {{ querlogsform.user_operation(id='user_operation') }}</div>
+                        <!-- 操作用户-->
+                        <div style="margin-top: 20px;margin-left: 19px;">
+                           登录IP : {{ querlogsform.loginip(id='loginip') }}{{ querlogsform.loginip.errors[0] }}</div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form id="del_from" method="POST" action="{{ url_for('project.admin.del_logs') }}" style="margin-left: 20px;padding-bottom: 20px;"
+                      onsubmit="return sumbit_sure();">
+                    删除 : {{ del_log_form.del_list(value=del_log_form.del_list.data) }}
+                    {{ del_log_form.submit(id='del_sub') }} <span style="vertical-align: middle;">日志</span>
+                </form>
+            </div>
+
+            <div class="am-g">
+                <table width="1170" border="1">
+                    <tr>
+                        <td width="29" align="center">ID</td>
+                        <td width="166" align="center">登陆时间</td>
+                        <td width="93" align="center">管理员ID</td>
+                        <td width="90" align="center">登陆IP</td>
+                        <td width="76" align="center">操作类型</td>
+                        <td width="70" align="center">操作状态</td>
+                        <td width="100" align="center">登陆密码</td>
+                        <td width="400" align="center">备注</td>
+                    </tr>
+                    {% for v in log.items %}
+                        <tr>
+                            <td>{{ v.id }}</td>
+                            <td>{{ v.create_at }}</td>
+                            <td>{{ v.admin_name }}</td>
+                            <td>{{ v.address }}</td>
+                            <td>{{ v.logtype }}</td>
+                            <td>{{ v.state }}</td>
+                            <td>{{ v.logpassword }}</td>
+                            <td>{{ v.pagename }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+                <div class="page">
+{#                    {{ macros.pagination_widget(log,'project.admin.logs', logtype = querlogsform.operration_type.data) }}#}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+<script language="javascript">
+    function sumbit_sure() {
+        var gnl = confirm("日志文件删除后将不能恢复，确定删除吗?");
+        if (gnl == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+    <!-- content end -->
+{% endblock content %}
+

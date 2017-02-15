@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+{% endblock %}
+{% block content %}
+    <!--组织机构-->
+    <div class="w1200">
+        <p class="nav_p">
+            <a href="{{ url_for('project.main.index') }}">首页</a> >
+            <a>组织机构</a> >
+            <a href="javascript:void(0)">校友会介绍</a>
+        </p>
+    </div>
+    </div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position: -45px -15px;"></div>
+                <p>组织机构</p>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('project.main.org_rule') }}">校友会章程</a></li>
+                <li class="on"><a href="{{ url_for('project.main.summary') }}">校友会介绍</a></li>
+
+{#                <li><a href="{{ url_for('project.main.member') }}">校友信息录入</a></li>#}
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('project.main.member') }}">校友入会通道</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('project.main.index_enter') }}">校友入会通道</a></li>
+                {% endif %}
+{#                <li><a href="#">会长致辞</a></li>#}
+            </ul>
+        </div>
+        <!--校友会章程-->
+        <div class="w1001 fr" style="padding-bottom: 100px;">
+            <p class="w1001_p">校友会简介</p>
+            <div class="clear organization_rule" style="border: none;">
+{#                {% for Intro in Alumni_Intro %}#}
+                    <h3>{{ Alumni_Intro.title }}</h3>
+                    {{ Alumni_Intro.content|safe }}
+{#                {% endfor %}#}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

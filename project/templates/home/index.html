@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(1)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    {% include "base/_banner.html" %}
+    <!--新闻-->
+    {#    <div class="content w1200">#}
+    {#        <div class="content_header clear">#}
+    {#            <P></P>#}
+    {#            <p>新闻动态</p>#}
+    {#            <p><a href="#">MORE+</a></p>#}
+    {#        </div>#}
+    {#        {% if top_new %}#}
+    {#            <div class="w1200 clear">#}
+    {#                <div class="content_games">#}
+    {#                    <img width="591" height="402" src="{{ top_new.img }}"/>#}
+    {#                    <p><a style="color: #fff"#}
+    {#                          href="{{ url_for('project.main.news_detail', id=top_new.id) }}">{{ top_new.title }}</a></p>#}
+    {#                </div>#}
+    {#                <ul class="content_game">#}
+    {#                    {% for new in news %}#}
+    {#                        <li>#}
+    {#                            <a href="{{ url_for('project.main.news_detail', id=new.id) }}"><span>•</span>{{ new.title }}<span>{{ new.create_at.strftime('%Y.%m.%d') }}</span></a>#}
+    {#                        </li>#}
+    {#                    {% endfor %}#}
+    {#                </ul>#}
+    {#            </div>#}
+    {#        {% endif %}#}
+    {#    </div>#}
+    <div class="content w1200">
+        <div class="content_header clear">
+            <P></P>
+            <p>新闻动态</p>
+            <p><a href="{{ url_for('project.main.new_alumni') }}">MORE+</a></p>
+        </div>
+        <div class="w1200 clear">
+            {% for news in news_list %}
+                {% if loop.index == 1 %}
+                    <a href="{{ url_for('project.main.new_alumni_SingleNews', id=news.id) }}">
+                    <div class="content_games">
+                          <img src="{{ url_for('static',filename='upload/'+ news.photo) }}"/>
+                          <p>{{ news.title }}</p>
+                    </div>
+                    </a>
+                    <ul class="content_game clearfix" style="margin-top:60px">
+                {% else %}
+                    <li class="content_game"><a href="{{ url_for('project.main.new_alumni_SingleNews', id=news.id) }}"><span>•</span>{{ news.title }}<span>{{ news.time }}</span></a></li>
+                {% endif %}
+                    </ul>
+            {% endfor %}
+        </div>
+    </div>
+    <!--校友介绍-->
+    <div class="w1200 mt35" >
+        <div class="content_header clear" style="border: none;">
+            <ul class="referral">
+                <li>
+                    <div class="clear">
+                        <P></P>
+                        <p>校友会介绍</p>
+                        <p><a href="{{ url_for('project.main.summary') }}">MORE+</a></p>
+                    </div>
+                    <p class="referral_p" style="display: none;">
+                      {{ intro.content|safe|truncate(270, True) }}
+                    </p>
+                </li>
+            </ul>
+            <!--校友服务-->
+            <ul class="referral service" style="margin-left: 22px;">
+                <li>
+                    <div class="clear">
+                        <P></P>
+                        <p>校友服务</p>
+                        <p><a href="javascript:void(0)">MORE+</a></p>
+                    </div>
+                    <ul class="service_more">
+                        <li><span></span>
+                            {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('project.main.member') }}">校友入会通道</a>
+                                {#                            <a href="member.html">校友入会通道</a>#}
+                            {% else %}
+                                <a href="{{ url_for('project.main.index_enter') }}">校友入会通道</a>
+                            {% endif %}
+                        </li>
+                        <li><span></span>
+                            {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('project.main.CorporateMember') }}">企业会员登记</a>
+                            {% else %}
+                                <a href="{{ url_for('project.main.index_enter') }}">企业会员登记</a>
+                            {% endif %}
+
+                        </li>
+                        <li><span></span><a href="{{ url_for('project.main.recruit') }}">校友招聘</a></li>
+                        <li><span></span><a href="{{ url_for("project.main.user") }}">校友服务联络中心</a></li>
+                        <li><span></span><a href="{{ url_for('project.main.cooperate') }}">互助合作</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--新增校友/校友捐赠-->
+            <ul class="referral" style="float: right;border-bottom:none;">
+                <li style="width: 100%;border-bottom: none;" class="clear">
+                    <div style="width: 50%;float: left;cursor: pointer;" id="referral_fl">
+                        <P style="background-position: -124px -18px;margin-left: 30px;"></P>
+                        <p>新增校友</p>
+                        <p class="clear"></p>
+                    </div>
+                    <div style="width: 50%;float: right;background-color: #e2e2e2;cursor: pointer;" id="referral_fr">
+                        <P style="background-position: -169px -18px;"></P>
+                        <p>校友会捐款名单</p>
+                    </div>
+                    <ul id="add_">
+                        <li style="width: 100%;height: 268px;overflow: hidden;" id="demo">
+                            <ul id="demo1">
+                                {% for add_alumni in add_alumni %}
+                                    <li>
+                                        <span><span>•</span>{{ add_alumni.grade }}<span class="fr">{{ add_alumni.name }}</span></span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul id="demo2"></ul>
+                        </li>
+                        <li><a href="{{ url_for('project.main.user') }}">查看全部</a></li>
+                    </ul>
+                    <div>
+                        <ul id="donates">
+                            <li style="height: 255px;margin-bottom: 42px;overflow: hidden;" id="demo_">
+                                <ul id="demo_1">
+                                    {% for enterprise in alumni_enterprise %}
+                                        <li>
+                                            <span><span class="donate_d">•</span>{{ enterprise.company }}<span
+                                                    class="donate_span"></span><span
+                                                    class="fr">￥{{ enterprise.money }}</span></span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul id="demo_2"></ul>
+                            </li>
+                            <li class="donates_li" style="width: 96px;height: 30px;display: block;border: 1px solid #b9342f;color: #b9342f;text-align: center;line-height: 30px;margin: 39px auto;">
+                                <a href="{{ url_for('project.main.donation') }}" >查看全部</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--活动专栏-->
+    <div class="content w1200">
+        <div class="content_header clear activity" style="border: none;">
+            <div class="clear activity_header">
+                <P></P>
+                <p>活动专栏</p>
+                <p><a href="{{ url_for('project.main.activity_apply') }}">MORE+</a></p>
+            </div>
+            <ul class="activity_severs">
+                {% for activ in activ_released %}
+                    <li>
+                        {#                    <img src="{{ url_for("static", filename="images/img_2.jpg") }}"/>#}
+                        {#                        <img src="{{ activ.activPic }}"/>#}
+                        <img src="{{ url_for("static", filename='upload/'+ activ.activPic) }}" style="width:310px;height:240px;"/>
+                        <p class="activity_header"><span class="donate_d" style="display: block;float: left;margin-right: -20px;">•</span><a href="{{ url_for('project.main.activity_apply_details',id=activ.id) }}" style="float: left;margin-top:0px;padding-left: 20px; text-decoration: none;font-size: 14px;margin-bottom: 0px;"> {{ activ.title }}</a><span class="activity_time">{{ activ.startime }}</span></p>
+                        <p style="margin-right: 0;line-height: 20px;color: #666;text-align: left;">
+                            {{ activ.introduce|safe|truncate(130, True)}}</p>
+                        <a href="{{ url_for('project.main.activity_apply_details',id=activ.id) }}">查看详情</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!--活动视频-->
+    <div class="w1200 mt35">
+        <div class="content_header clear" style="border-bottom: none;">
+            <ul class="video_header" id="video_header">
+                {% for photo in video_list %}
+                    <li>
+                        <div class="clear">
+                            <P></P>
+                            <p>照片视频</p>
+                            <p><a href="{{ url_for('project.main.multimedia_video') }}">MORE+</a></p>
+                        </div>
+{#                        <video style="width: 100%" src="{{ url_for('static',filename='vidio/'+video.video) }}" controls="controls" poster="{{ url_for('static',filename='images/video_img2.jpg') }}" width="100%">#}
+{#                                    <source src="iceage4.mp4" type="video/mp4"></source>#}
+{#                        </video>#}
+                        <div>
+                              <div><a href="{{ url_for('project.main.multimedia_video') }}"><img src="{{ url_for('static',filename='upload/'+photo.photo) }}" style='margin-left:125px;width: 400px;height: 270px;'/></a></div>
+{#                              <a href="javascript:void(0)">{{ photo.title }}</a>#}
+                        </div>
+                        <p style="font-size: 16px;line-height: 20px;"><span class="donate_d">•</span>
+                            <a href="{{ url_for('project.main.multimedia_video') }}" style="color: #333;" class="aug_video" id="a_video">{{ photo.title }}</a>
+                            <span style="float: right;font-size: 14px;color: #666;">{{ photo.time }}</span>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!--校友专访-->
+            <ul class="exclu_header">
+                <li>
+                    <div class="clear">
+                        <P></P>
+                        <p>校友专访</p>
+                        <p><a href="{{ url_for('project.main.alumni_inter') }}">MORE+</a></p>
+                    </div>
+                </li>
+                {% for inter in inter_alumni_index %}
+                    {% if loop.index == 1 %}
+                        <li>
+                            <img src="{{ url_for('static',filename='upload/' + inter.photo) }}"/>
+                            <a href="{{ url_for('project.main.alumni_interview_details', id=inter.id) }}">{{inter.title }}</a>
+                            <span style="font-size: 14px;">{{inter.content|safe|truncate(110, True) }}</span>
+                        </li>
+                    {% else %}
+                        <li class="fl"><a href="{{ url_for('project.main.alumni_interview_details',id=inter.id) }}"><span class="donate_d">•</span>{{inter.title }} <span
+                                class="fr">{{inter.time }}</span></a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {#    <!--友情链接-->#}
+    <div class="content w1200">
+        <div class="content_header clear link">
+            <P></P>
+            <p>友情链接</p>
+            <p><a href="{{ url_for('project.main.friendlink') }}">MORE+</a></p>
+        </div>
+        <ul class="link_logo">
+            {% for friend_link in friend_links %}
+                <li><a href="{{ friend_link.link }}">
+                    <img src="{{ url_for("static", filename='upload/'+ friend_link.img) }}" width="157" height="52"/></a>
+{#                <img src="{{ url_for("static", filename='images/'+ friend_link.img) }}"/>#}
+                </li>
+
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

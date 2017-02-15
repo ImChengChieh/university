@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+		<!--照片视频-->
+		<div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="{{ url_for('project.main.multimedia_photo') }}">照片视频</a> ><a href="javascript:void(0)">视频专辑</a> </p></div>
+		<div class="w1200 clear mt10">
+			<div class="w176 fl">
+				<div class="nav_new">
+					<div style="background-position:-411px -12px;"></div>
+					<p>照片视频</p>
+				</div>
+				<ul id="column_">
+					<li><a href="{{ url_for('project.main.multimedia_photo') }}">照片专栏</a></li>
+					<li class="on"><a href="javascript:;">视频专栏</a></li>
+				</ul>
+			</div>
+			<!--照片视频>视频专栏-->
+			<div class="w1001 fr" id="video_column">
+				<p class="w1001_p">视频专辑</p>
+			    <div class="w843 clear" style="margin-top: 20px;border: none;margin-bottom: 80px;">
+                    {% for vedio in activ_video.vedio %}
+                          <div style=" float: left; margin-left:40px;margin-top: 50px;">
+                            <video style="cursor:pointer;" src="{{ url_for('static',filename='vidio/'+vedio.video) }}" controls="controls" poster="{{ url_for('static',filename='images/video_img2.jpg') }}" width="100%">
+                                    <source src="iceage4.mp4" type="video/mp4"></source>
+                            </video>
+                            <p>{{ vedio.title }}<span>{{ vedio.time }}</span></p>
+                          </div>
+                    {% endfor %}
+			     </div>
+            </div>
+		 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(6)
+
+{#            var column = document.getElementById('column_');#}
+{#            var column_li = column.getElementsByTagName('li');#}
+{#            var video_column = document.getElementById('video_column');#}
+{#            var picture_column = document.getElementById('picture_column');#}
+{#            column_li[0].onclick = function () {#}
+{#                video_column.style.display = 'none';#}
+{#                picture_column.style.display = 'block';#}
+{#                column_li[1].style.backgroundColor = '#fff';#}
+{#                column_li[0].style.backgroundColor = '#f8eaea';#}
+{#            }#}
+{#            column_li[1].onclick = function () {#}
+{#                video_column.style.display = 'block';#}
+{#                picture_column.style.display = 'none';#}
+{#                column_li[1].style.backgroundColor = '#f8eaea';#}
+{#                column_li[0].style.backgroundColor = '#fff';#}
+{#            }#}
+
+            $(function () {
+                $('.w176 #column_').on('click',function () {
+
+                })
+            })
+
+            var vid =document.getElementById('video_column');
+            var video=vid.getElementsByTagName('video');
+            var num=0;
+            for(var i=0;i<video.length;i++){
+                video[i].onclick=function(){
+                    num++;
+                     if(num%2!=0){
+                        this.play();
+                     }
+                     else{
+                        this.pause();
+                     }
+
+                }
+            }
+
+        }
+    </script>
+{% endblock %}

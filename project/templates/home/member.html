@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+    <!--企业会员-->
+    <div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="">会员服务</a> > <a href="#">企业会员</a></p>
+    </div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position: -216px -19px;"></div>
+                <p>会员服务</p>
+            </div>
+            <ul>
+                <li class="on"><a href="{{ url_for('project.main.member') }}">校友入会</a></li>
+                <li><a href="{{ url_for('project.main.CorporateMember') }}">企业会员</a></li>
+            </ul>
+        </div>
+        <!--校友入会-->
+        <div class="w1001 fr">
+            <p class="w1001_p">校友入会</p>
+            <div class="member" style="border: none;">
+                {% if current_user.name == None %}
+                    <p class="member_warning"><span></span>请认真填写入会表格，提交后会有专员进行审核。我们会将审核情况通知发送到您的邮箱。</p>
+                {% else %}
+                    <p class="member_warning"><span></span>您的个人信息已经填写过了，无需再次添加信息。</p>
+                {% endif %}
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style=" margin-left: 25px;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+
+                <form action="" method="post" id="box" onsubmit="return checkeds()">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        <span>*</span>{{ form.name.label }}：{{ form.name(id="name_",onblur="name_blur()",onfocus="name_focus()") }}<samp></samp>
+                    </p>
+                    <p><span>*</span>您的性别：{{ form.sex(style="display:flex;margin-top:-22px;margin-left:155px",class="woman") }}
+                    </p>
+                    <p><span>*</span>{{ form.status.label }}：{{ form.status(style='width:149px;height:36px;margin-left:1px;',class="info-select") }}
+
+                    </p>
+                    <p> <span>*</span>入学班级：{{ form.grade(style='margin-left:1px;',id="class_",onblur="class_blur()",onfocus="class_focus()") }}
+                        <samp></samp></p>
+                    <p style="padding-left: 17px;">
+                        <span>*</span>联络人：{{ form.contact(style='margin-left:0px;',id="contact",onblur="contact_blur()",onfocus="contact_focus()") }}
+                        <a href="{{ url_for('project.main.contact_user') }}" class="examine_a">查看所有联络人</a><samp></samp></p>
+                    <p><span>*</span>地理位置：
+                        <select style="margin-left: -5px;color: #333;" name="addess_province" id="s_province" class="info-select">
+
+                        </select>
+                        <select style="color: #333;" name="addess_city" id="s_city" class="info-select ml20">
+
+                        </select>
+                        <samp></samp>
+                    </p>
+                    <p>
+                        <span>*</span>{{ form.birthday.label }}：{{ form.birthday(id="date_input",readonly="readonly",placeholder="请选择") }}
+                    <div id="date_img"></div>
+                    <samp class="birthdaty_samp"></samp></p>
+                    <p>
+                        <span>*</span>{{ form.identInfor.label }}：{{ form.identInfor(style="margin-left: 157px;",id="message",placeholder="请填写企业的有关介绍。",onblur="message_blur()",onfocus="message_focus()") }}
+                        <samp class="message_samp"></samp></p>
+                    <p>
+                        <span>*</span>{{ form.phone.label }}：{{ form.phone(id="tel",onblur="tel_blur()",onfocus="tel_focus()") }}
+                        <samp></samp></p>
+                    <p>
+                        <span>*</span>{{ form.email.label }}：{{ form.email(id="eamil",onblur="eamil_blur()",onfocus="eamil_focus()") }}
+{#                    <p class="member_rule">{{ form.accept(id="deal") }}{{ form.accept.label }}#}
+                        <samp></samp></p>
+                    <p class="member_rule"><input type="checkbox" name="deal" id="deal"/>同意<a href="{{ url_for("project.main.org_rule") }}" style="color: #333;">《校友会章程》</a><samp></samp></p>
+                    <p>{{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--页尾-->
+{% endblock %}
+<!-- End content -->
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for("static", filename="js/member.js") }}"></script>
+    <script class="resources library" src="{{ url_for("static", filename="js/area.js") }}"></script>
+    <script type="text/javascript">_init_area();</script>
+    <script>
+          $('#s_province').on('change',function () {
+             var province = $('#s_province').val();
+              $.ajax({
+                  url:"/api/province",
+                  type:'post',
+                  data:{'s_province':province},
+{#                  success:function (data) {#}
+{##}
+{#                  }#}
+              })
+          });
+
+          $('#s_city').on('change',function () {
+             var city = $('#s_city').val();
+              $.ajax({
+                  url:"/api/city",
+                  type:'post',
+                  data:{'s_city':city},
+{#                  success:function (data) {#}
+{##}
+{#                  }#}
+              })
+          });
+    </script>
+{% endblock %}
+<!-- footer Start -->
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+<!-- End footer-->

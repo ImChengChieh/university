@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>捐赠名录</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{% endblock scripts %}
+{% block content %}
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">捐赠校友</strong> /
+                    <small>alumni</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="width: 800px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+
+                <form method="post" class="banner_add">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.department.label }}{{ form.department(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.name.label }}{{ form.name(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.type.label }}{{ form.type(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.company.label }}{{ form.company(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.money.label }}{{ form.money(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p style="margin-left: 50px;">
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}

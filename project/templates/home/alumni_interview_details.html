@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ interview_details.title }}{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+{% endblock %}
+{% block content %}
+		<!--校友会新闻>新闻详情-->
+		<div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="{{ url_for('project.main.alumni_inter') }}">专访动态</a> >  <a href="javascript:void(0)">新闻详情</a></p></div>
+		<div class="w1200 clear mt10 new_alumni_SingleNews" style="padding-bottom: 50px;">
+			<p>专访详情</p>
+
+                <h3>{{ interview_details.title }}</h3>
+                <div style="height: 50px;">
+                    <span style="margin-left:40%">时间:{{ interview_details.time }} 发布人: admin </span>
+                </div>
+                <img src="{{ url_for('static',filename='upload/' + interview_details.photo) }}"  style="margin-top: 17px;margin-bottom:30px;width: 600px;height:300px; "/>
+			    <p>{{ interview_details.content|safe }}</p>
+		</div>
+{% endblock %}

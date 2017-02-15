@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="{% block seo_keywords %}西南科技大学,成都校友会,土建,校友会{% endblock %}"/>
+        <meta name="description" content="{% block seo_description %}西南科技大学成都校友会土建分会{% endblock %}">
+        <link rel="icon" href="{{ url_for("static", filename="icon/01.ico") }}"/>
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+
+        <link rel="stylesheet" href="{{ url_for("static", filename="fonts/PingFang Bold.ttf") }}">
+    {% endblock %}
+    {% block style %}
+
+    {% endblock %}
+    <title>{% block title %}西南科技大学成都校友会土建分会{% endblock %}</title>
+</head>
+<body>
+
+<!-- top Start -->
+{% block top %}
+    {% include "base/_top.html" %}
+{% endblock %}
+<!-- End top -->
+
+<!-- nav Start -->
+{% block nav %}
+    {% include "base/_nav.html" %}
+{% endblock %}
+<!-- End top -->
+
+<!-- content Start -->
+{% block content %}{% endblock %}
+<!-- End content -->
+
+<!-- footer Start -->
+{% block footer %}
+    {% include "base/_footer.html" %}
+{% endblock %}
+<!-- End footer-->
+
+{% block scripts %}
+    <script src="{{ url_for("static", filename="vendors/jq_date/laydate.dev.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/jquery-1.10.2.min.js") }}"></script>
+{#    <script src="{{ url_for("static", filename="js/member.js") }}"></script>#}
+    <script src="{{ url_for("static", filename="js/register.js") }}"></script>
+{#    <script src="{{ url_for("static", filename="js/corete.js") }}"></script>#}
+{% endblock %}
+</body>
+</html>

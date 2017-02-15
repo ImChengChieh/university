@@ -1,0 +1,241 @@
+<!-- sidebar start -->
+<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+        <ul id="accordion" class="am-list admin-sidebar-list">
+            <li><a href="{{ url_for("project.admin.index") }}"><span class="am-icon-home"></span> 首页</a></li>
+
+            <li class="admin-parent">
+{#                <a class="link am-cf" data-am-collapse="{target: '#collapse-nav3'}">#}
+                <a class="link">
+                    <span class="am-icon-gears"></span>
+                    入会审核
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                </a>
+                <ul class="submenu am-list admin-sidebar-sub" id="collapse-nav3">
+                    <li>
+                        <a id="fellow" href="{{ url_for("project.admin.fellow_list",page_id='fellow') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            校友入会
+                        </a>
+                    </li>
+                    <li>
+                        <a id="company" href="{{ url_for("project.admin.company_list",page_id='company') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            企业会员
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="admin-parent">
+{#                <a class="link am-cf" data-am-collapse="{target: '#collapse-nav1'}">#}
+                <a class="link">
+                    <span class="am-icon-file"></span>
+                    新闻频道
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                </a>
+                <ul class="submenu am-list admin-sidebar-sub" class="submenu_view" id="collapse-nav1">
+{#                <ul class="submenu">#}
+                    <li>
+                        <a id="banner_news" href="{{ url_for('project.admin.banner_list',page_id='banner_news') }}" class="am-cf">
+                            <span class="am-icon-check"></span>
+                            Bannar新闻
+                        </a>
+                    </li>
+                    <li>
+                        <a id="alumni_news" href="{{ url_for('project.admin.news_list',page_id='alumni_news') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            新闻动态
+                        </a>
+                    </li>
+                    <li class="admin-parent">
+                        <a id="interview" href="{{ url_for("project.admin.interview_list",page_id='interview') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            校友专访
+                        </a>
+                    </li>
+                    <li>
+                        <a id='recruitment' href="{{ url_for('project.admin.recuit_list',page_id='recruitment') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            校友招聘
+                        </a>
+                    </li>
+                    <li>
+                        <a id='cooperate' href="{{ url_for('project.admin.cooperate_list',page_id='cooperate') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            互助合作
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="admin-parent">
+{#                <a class="link am-cf" data-am-collapse="{target: '#collapse-nav3'}">#}
+                <a class="link">
+                    <span class="am-icon-gears"></span>
+                    组织机构
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                </a>
+                <ul class="submenu am-list admin-sidebar-sub" id="collapse-nav3">
+                    <li>
+                        <a id="alumin_assssoci" href="{{ url_for("project.admin.summary_list",page_id='alumin_assssoci') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            校友会简介
+                        </a>
+                    </li>
+                    <li>
+                        <a id="contact" href="{{ url_for("project.admin.contact_list",page_id='contact') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            校友联络人
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="admin-parent">
+                <a href="{{ url_for("project.admin.activity") }}">
+                    <span class="am-icon-puzzle-piece"></span>
+                    活动发布
+                </a>
+            </li>
+
+
+            <li class="admin-parent">
+{#                <a class="link fadminpho am-cf" data-am-collapse="{target: '#collapse-nav6'}">#}
+                <a class="link">
+                    <span class="am-icon-gears"></span>
+                    照片视频
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                </a>
+                <ul class="submenu adminphoto am-list admin-sidebar-sub" id="collapse-nav3">
+{#                <ul class="submenu">#}
+                    <li>
+                        <a id="photo" href="{{ url_for("project.admin.photo",page_id='photo') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            照片资料
+                        </a>
+                    </li>
+                    <li>
+                        <a id="video" href="{{ url_for("project.admin.video",page_id='video') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            视频资料
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="admin-parent">
+                <a href="{{ url_for("project.admin.Alumni_donations") }}">
+                    <span class="am-icon-puzzle-piece"></span>
+                    捐赠名单
+                </a>
+            </li>
+
+            <li class="admin-parent">
+                <a href="{{ url_for("project.admin.friendshiplink") }}">
+                    <span class="am-icon-puzzle-piece"></span>
+                    友情链接
+                </a>
+            </li>
+
+            <li class="admin-parent">
+{#                <a class="link am-cf" data-am-collapse="{target: '#collapse-nav3'}">#}
+                <a class="link">
+                    <span class="am-icon-gears"></span>
+                    后台管理
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                </a>
+                <ul class="submenu am-list admin-sidebar-sub" id="collapse-nav3">
+                    <li>
+                        <a id='member' href="{{ url_for("project.admin.admin_list",page_id='member') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            会员管理
+                        </a>
+                    </li>
+                    <li>
+                        <a id="manager" href="{{ url_for("project.admin.logs",page_id='manager') }}">
+                            <span class="am-icon-puzzle-piece"></span>
+                            管理员操作日志
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{{ url_for('project.admin.logout') }}"><span class="am-icon-sign-out"></span> 注销</a>
+            </li>
+        </ul>
+
+
+
+
+        <div class="am-panel am-panel-default admin-sidebar-panel">
+            <div class="am-panel-bd">
+                <p><span class="am-icon-bookmark"></span></p>
+                <p>时光静好，与君语；细水流年，与君同。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- sidebar end -->
+<script>
+
+</script>
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script>
+{#           $(".fadminpho").click(function(){#}
+{#               $(".adminphoto").toggle(300);#}
+{#           });#}
+        $(function() {
+            var Accordion = function(el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                // Variables privadas
+                var links = this.el.find('.link');
+                // Evento
+                links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown)
+            }
+
+            Accordion.prototype.dropdown = function(e) {
+                var $el = e.data.el;
+                    $this = $(this),
+                    $next = $this.next();
+
+                $next.slideToggle();
+                $this.parent().toggleClass('open');
+
+                if (!e.data.multiple) {
+                    $el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+                };
+            }
+
+            var accordion = new Accordion($('#accordion'), false);
+        });
+
+        (function(){
+            var $_GET = (function(){
+                var url = window.document.location.href.toString();
+                var u = url.split("?");
+                if(typeof(u[1]) == "string"){
+                    u = u[1].split("&");
+                    var get = {};
+                    for(var i in u){
+                        var j = u[i].split("=");
+                        get[j[0]] = j[1];
+                    }
+                    return get;
+                } else {
+                    return {};
+                }
+            })();
+
+            var page_id = $_GET['page_id'];
+            $("#" + page_id).parent().addClass(".submenu_view");
+            $("#" + page_id).parent().parent().parent().find('.admin-sidebar-sub ').show();
+{#            $("#" + page_id).parent().parent().parent().find('.arrow').removeClass("fa-angle-left").addClass("fa-angle-down");#}
+        })()
+    </script>
+
+{% endblock %}

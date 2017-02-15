@@ -1,0 +1,63 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>互助合作</small>
+    </div>
+{% endblock page_name %}
+
+{% block content %}
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">互助合作</strong> /
+                    <small>cooperate</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="width: 800px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+                <form method="post" enctype=multipart/form-data class="banner_add">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.title.label }}{{ form.title(style="width: 470px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.content.label }}{{ form.content(id="editor",placeholder="请输入编辑内容",autofocus='true') }}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+		var editor = new Simditor({
+		   textarea: $('#editor'),
+            upload: {
+                url: '/admin/upload/img',
+                params: null,
+                fileKey: 'file',
+                connectionCount: 1,
+                leaveConfirm: 'Uploading'
+            }
+		});
+	</script>
+{% endblock scripts %}

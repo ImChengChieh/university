@@ -1,0 +1,26 @@
+<!--导航-->
+<div class="nav" style="font-family:'PingFang Bold';">
+    <ul class="w1200 clear main_nav">
+        <li>
+            <a href="{{ url_for('project.main.index') }}">首页</a>
+            <img src="{{ url_for("static", filename="images/li_division.png") }}"/>
+        </li>
+        <li>
+            <a href="{{ url_for('project.main.new_alumni') }}">新闻动态</a>
+            <img src="{{ url_for("static", filename="images/li_division.png") }}"/>
+        </li>
+        <li>
+            <a href="{{ url_for('project.main.org_rule') }}">组织机构</a>
+            <img src="{{ url_for("static", filename="images/li_division.png") }}"/>
+        </li>
+        <li>
+            <a href="{{ url_for('project.main.alumni_inter') }}">校友专访</a>
+            <img src="{{ url_for("static", filename="images/li_division.png") }}"/>
+        </li>
+        <li>
+            <a href="{{ url_for('project.main.activity_apply') }}">活动专栏</a>
+            <img src="{{ url_for("static", filename="images/li_division.png") }}"/>
+        </li>
+        <li><a href="{{ url_for('project.main.multimedia_photo') }}">照片视频</a></li>
+    </ul>
+</div>

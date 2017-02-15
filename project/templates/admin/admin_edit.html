@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>管理员列表</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{% endblock scripts %}
+{% block content %}
+    <!-- modal start -->
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="delete-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示</div>
+            <div class="am-modal-bd">
+                你，确定要删除这条记录吗？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">会员编辑</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style=" width: 400px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+                <form method="post" enctype=multipart/form-data class="banner_add" style="width: 400px;">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.username.label }}{{ form.username(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.password.label }}{{ form.password(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.password2.label }}{{ form.password2(style="width: 270px;height: 40px;") }}
+                    </p>
+{#                    <p>#}
+{#                        {{ form.phone.label }}{{ form.phone() }}#}
+{#                    </p>#}
+                    <p>
+{#                        {{ form.email.label }}{{ form.email() }}#}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}

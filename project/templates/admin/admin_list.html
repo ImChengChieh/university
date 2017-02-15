@@ -1,0 +1,143 @@
+{% extends "admin/base.html" %}
+{% import "_macros.html" as macros %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>管理员列表</small>
+    </div>
+{% endblock page_name %}
+
+{% block content %}
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">会员信息</strong> /
+                    <small>associator</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-6">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a href="{{ url_for("project.admin.add_member") }}" class="am-btn am-btn-default">
+                                <span class="am-icon-plus"></span>
+                                添加新会员
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" action="{{ url_for('project.admin.user_index') }}">
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-input-group am-input-group-sm">
+                            {{ search_form.keywords(id="keywords",class="am-form-field") }}
+                            <span class="am-input-group-btn">
+                                  {{ search_form.submit(id="do_find",class="am-btn am-btn-default") }}
+                            </span>
+                        </div>
+                    </div>
+                    {{ search_form.hidden_tag() }}
+                </form>
+
+                <form method="post" action="{{ url_for('project.admin.user_index') }}">
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-input-group am-input-group-sm">
+                            {{ choice_form.type(style="margin-left: 81px;height: 33px;") }}
+                            <span class="am-input-group-btn">
+                                  {{ choice_form.submit(id="do_find",class="am-btn am-btn-default") }}
+                            </span>
+                        </div>
+                    </div>
+                    {{ choice_form.hidden_tag() }}
+                </form>
+
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <form class="am-form">
+                        <table class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th class="table-id">ID</th>
+                                <th class="table-title">用户名</th>
+                                <th>注册时间</th>
+                                <th>最后登录时间</th>
+                                <th class="table-set">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in activities %}
+                                <tr>
+                                    <th class="addalumni_edit_id">{{ user.id }}</th>
+                                    <th>{{ user.username }}</th>
+                                    <th>{{ user.member_since }}</th>
+                                    <th>{{ user.last_seen }}</th>
+                                    {% if not user.state %}
+                                        <th id="Frozen_account" class="Frozen_account" data-id="{{ user.id }}">
+                                            <span>
+                                                    <a href="javascript:void(0)" type="submit"
+                                                       style="color:red;">解冻账户</a>
+                                            </span>
+                                        </th>
+                                    {% else %}
+                                        <th id="Frozen_account" class="Frozen_account" data-id="{{ user.id }}">
+                                            <span>
+                                                    <a href="javascript:void(0)" type="submit" style="color:#008200;">冻结账户</a>
+                                            </span>
+                                        </th>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr/>
+                    </form>
+                    {% if pagination %}
+                        <div class="mac-ul">
+                            {{ macros.pagination_widget(pagination, 'project.admin.user_index') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- content end -->
+{% endblock content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/admin_list.js') }}"></script>
+    <script>
+        window.onload = function () {
+            $('.Frozen_account').on('click', function () {
+                var $this = $(this);
+                var id = $(this).parent().children().eq(0).text();
+                $.ajax({
+                    type: "post",
+                    data: {'id': id},
+                    url: "/admin/api/admin_list",
+                    success: function (data) {
+                        if (data == '0') {
+                            $this.html('解冻账户').css("color", "red");
+                        }
+                        if (data == '1') {
+                            $this.html('冻结账户').css("color", "#008200");
+                        }
+                    }
+                })
+
+            });
+        }
+    </script>
+
+{% endblock scripts %}

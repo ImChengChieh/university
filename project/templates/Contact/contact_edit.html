@@ -1,0 +1,61 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>校友目录</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{% endblock scripts %}
+{% block content %}
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">名单编辑</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g form_ag">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="width: 350px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+                <form method="post" enctype=multipart/form-data style="" class="contact_add">
+                    {{ form.hidden_tag() }}
+                    <p style="width: 360px;">
+                        {{ form.username.label }}{{ form.username(style="width: 270px;height: 40px;margin-left: 33px;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.CoporateName.label }}{{ form.CoporateName(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.grade.label }}{{ form.grade(placeholder="本部学院土木04级",style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.phone.label }}{{ form.phone(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.email.label }}{{ form.email(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.weixin.label }}{{ form.weixin(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}

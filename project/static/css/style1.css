@@ -1,0 +1,93 @@
+ul, ol {
+    list-style: none
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mac-ul ul li {
+    float: left;
+    border: 1px solid #ddd;
+    /*padding: 0 5px;*/
+    width: 50px;
+    height: 30px;
+    text-align: center;
+}
+
+.mac-ul ul li:hover {
+    background: #4bba8f;
+}
+
+.mac-ul ul li .active {
+    background: #4bba8f;
+    color: #fff;
+}
+
+.mac-ul ul li a:hover {
+    color: #4bba8f;
+}
+
+.mac-ul ul {
+    float: right;
+}
+
+.submenu {
+    display: none;
+}
+
+.submenu_view {
+    display: block;
+    color: #00a0e9;
+}
+
+.contact_add {
+    width: 350px;
+    margin: 0 auto;
+}
+
+.contact_add input {
+    height: 30px;
+}
+
+.contact_add label {
+    padding-right: 15px;
+}
+
+.contact_add input[type="submit"] {
+    margin-left: 130px;
+}
+
+.banner_add {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.banner_add label {
+    padding-right: 20px;
+}
+
+.admin-content {
+    padding: 0 20px;
+}
+
+.am-g form p label {
+    padding-right: 20px;
+}
+
+.am-g form p input[type="text"] {
+    text-indent: 1em;
+}
+
+.am-g form p .simditor {
+    width: 800px;
+}
+

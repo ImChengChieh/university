@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block content %}
+    <!--活动专栏-->
+    <div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="">活动专栏</a> > <a
+            href="javascript:viod(0)">活动回顾</a></p></div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position: -381px -15px;"></div>
+                <p>活动专栏</p>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('project.main.activity_apply') }}">活动报名</a></li>
+                <li class="on"><a href="javascript:viod(0)">活动回顾</a></li>
+            </ul>
+        </div>
+        <!--活动报名-->
+        <div class="w1001 fr">
+            <p class="w1001_p">活动报名</p>
+{#            {{ current_time }}#}
+            {% for review in activity_review %}
+{#                {% if loop.index ==1 or loop.index ==2 %}#}
+                {% if current_time > review.duration  %}
+                    <div class="clear">
+                        <img src="{{ url_for('static',filename='images/' + review.activPic) }}"/>
+                        <div class="activity_apply">
+                            <p class="activity_apply_a"><a
+                                    href="{{ url_for('project.main.activity_apply_details',id=review.id) }}">{{ review.title }}</a><span
+                                    class="fr use" style="color: #999;">活动回顾</span></p>
+                            <p>活动时间：{{ review.startime }}至{{ review.duration }}</p>
+                            <p>集合地点：{{ review.location }}</p>
+                            <p>活动描述：{{ review.introduce|safe }}</p>
+                            <input type="button" value="活动已结束" disabled="disabled" style="background-color: #999999;"/>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="w860">
+{#                <ul>#}
+{#                    <li style="margin-right: 10px;"><a href="#">首页</a></li>#}
+{#                    <li><a href="#">1</a></li>#}
+{#                    <li class="on"><a href="#">2</a></li>#}
+{#                    <li><a href="#">3</a></li>#}
+{#                    <li><a href="#">···</a></li>#}
+{#                    <li style="margin-left: 10px;"><a href="#">尾页</a></li>#}
+{#                </ul>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    {{ moment.include_moment() }}
+    <script>
+        window.onload = function () {
+            util.nav(5);
+
+
+            $('.activity_apply').on('click', '.vis', function () {
+                var $this = $(this);
+                var attr = $(this).attr('data-use');
+{#                alert($this.val());#}
+                if ($this.val() == '我要报名') {
+                    $.ajax({
+                        url: "/api/part",
+                        type: 'post',
+                        data: {'data-use': attr},
+                        success: function (data) {
+
+                            if (data == '1') {
+                                {#                            alert('success')#}
+                                $this.val('您已报名成功').css("background", "#333");
+                            } else {
+{#                                alert('fail')#}
+                                $this.val('我要报名').css("background","#fff")
+                            }
+
+                        }
+                    })
+                }
+            })
+        };
+
+    </script>
+{% endblock %}
+

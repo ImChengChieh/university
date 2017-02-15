@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            {% block title %}
+                后台管理
+            {% endblock title %}
+        </title>
+        <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+        {% block styles %}
+            <link rel="icon" type="image/png" href="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/i/favicon.png") }}">
+            <link rel="apple-touch-icon-precomposed" href="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/i/app") }}-icon72x72@2x.png">
+            <link rel="stylesheet" href="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/css/amazeui.min.css") }}"/>
+            <link rel="stylesheet" href="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/css/admin.css") }}">
+            <link media="all" rel="stylesheet" type="text/css" href="{{ url_for("static", filename="vendors/simditor/styles/simditor.css") }}" />
+            <link  rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/style1.css") }}" />
+            <style>
+                #edui1{
+                    margin-left: -1.4rem;
+                }
+
+                .seo_des{
+                    width: 50%;
+                    resize: none;
+                }
+
+            .am-alert{
+                color: #f00;
+                background: #fff;
+                border: none;
+            }
+
+            [class*=am-u-]+[class*=am-u-]:last-child{
+                float: left;
+            }
+            </style>
+        {% endblock styles %}
+        <meta name="apple-mobile-web-app-title" content="后台"/>
+    {% endblock head %}
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，网站暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar am-topbar-inverse admin-header">
+    {% block  page_name %}
+        <div class="am-topbar-brand">
+            <strong>后台管理</strong>
+            <small>主页</small>
+        </div>
+    {% endblock page_name %}
+
+    {% include "admin/_nav_top.html" %}
+</header>
+
+<div class="am-cf admin-main">
+
+    {% include "admin/_nav_left.html" %}
+
+    {% block content %}
+        <div style="margin-left:610px;padding-top: 100px;color: blue;">
+            {% for message in get_flashed_messages() %}
+                 温馨提示:<span style="padding-left: 10px;">{{ message }}!</span>
+            {% endfor %}
+            {% block page_content %}{% endblock %}
+        </div>
+        <div style="margin-left: 45%;margin-top: 2%;">
+            <form method="post">
+                {{ form.hidden_tag() }}
+                <p>{{ form.username.label }}{{ form.username(id='username',style="width: 200px;height: 30px;margin-left:15px;text-indent:1em;") }}{{ form.username.errors[0] }}</p>
+                <p>{{ form.password.label }}{{ form.password(id='password',style="width: 200px;height: 30px;margin-left:15px;text-indent:1em;") }}{{ form.password.errors[0] }}</p>
+                <p style="padding-left: 100px;">{{ form.remember_me.label }}<span style="padding-left: 10px;">{{ form.remember_me(id='remember_me') }}</span></p>
+                <p style="padding-left: 70px;">{{ form.submit() }}<input type="reset" style="margin-left: 50px;"></p>
+            </form>
+        </div>
+    {% endblock content %}
+</div>
+
+{% block scripts %}
+    <!--[if lt IE 9]>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/js/amazeui.ie8polyfill.min.js") }}"></script>
+    <![endif]-->
+
+    <script src="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/js/jquery.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/js/amazeui.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="vendors/AmazeUI-2.7.1/assets/js/app.js") }}"></script>
+    <script src="{{ url_for("static", filename="vendors/simditor/scripts/jquery.min.js") }}"></script>
+	<script src="{{ url_for("static", filename="vendors/simditor/scripts/module.js") }}"></script>
+	<script src="{{ url_for("static", filename="vendors/simditor/scripts/hotkeys.js") }}"></script>
+	<script src="{{ url_for("static", filename="vendors/simditor/scripts/uploader.js") }}"></script>
+	<script src="{{ url_for("static", filename="vendors/simditor/scripts/simditor.js") }}"></script>
+{% endblock scripts %}
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+	 <!--注册界面-->
+	 <div class="index_register w1200 clear">
+	 	<p>注册账号</p>
+	 	<div class="w520 fl">
+	 		<div class="w252 fl">
+	 			<img src="{{ url_for("static", filename="images/register_img1.jpg") }}" />
+	 			<img src="{{ url_for("static", filename="images/register_img4.jpg") }}" />
+	 		</div>
+	 		<div class="w264 fr">
+	 			<img src="{{ url_for("static", filename="images/register_img2.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img3.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img5.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img6.jpg") }}" />
+		 		<img src="{{ url_for("static", filename="images/register_img7.jpg") }}" />
+	 		</div>
+	 		<div class="clear"></div>
+	 	</div>
+        <div class="w410">
+             <div class = "container">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning" style="width: 100%;height: 10px;">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% for field in form.errors %}
+                {% for error in form.errors[field] %}
+                    <li style=" margin-left: 25px;color: #f00;" class="alert mt10 alert-success">
+                        {{ error }}
+                    </li>
+                {% endfor %}
+            {% endfor %}
+            <form action="" method="post" class="index_register_form" id="register_" onsubmit="return checkes()">
+            {{ form.hidden_tag() }}
+               <p><span>*</span>账号：{{ form.username(id="user",placeholder="请输入你的账号",onblur="user_blur()",onfocus="user_focus()") }}<samp></samp></p>
+               <p><span style="margin-left:28px;">*</span>密码：{{ form.password(id="password",placeholder="请输入你的密码",onblur="password_blur()",onfocus="password_focus()") }}<samp></samp></p>
+               <p style="text-align: left;"><span>*</span>确认密码：{{ form.repassword(id="repassword",placeholder="请再次输入你的密码",onblur="repassword_blur()",onfocus="repassword_focus()") }}<samp></samp></p>
+{#               <p style="margin-left: 76px;",>{{ form.accept(id="checkde") }}我已阅读并同意<a href="{{ url_for('project.main.organization') }}"></a>《校友会章程》</a><samp></samp></p>#}
+{#                <p style="text-align: center;" class="member_rule"><input type="checkbox" name="deal" id="deal"/>同意<a href="{{ url_for("project.main.org_rule") }}">《校友会章程》</a><samp></samp></p>#}
+                <p style="text-align: center;"><input type="checkbox" id="checkde"/>我已阅读并同意<a href="{{ url_for('project.main.org_rule') }}">《校友会章程》</a><samp></samp></p>
+               <p>{{ form.submit() }}</p>
+                <p style="margin-left: 100px;margin-top: 10px;">已有账号？返回
+                   <a  href="{{ url_for('project.main.index_enter') }}">登录</a> 或
+                   {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('project.main.member') }}">登记入会</a>
+                   {% else %}
+                        <a href="{{ url_for('project.main.index_enter') }}">登记入会</a>
+                   {% endif %}
+               </p>
+{#	 		   <p>已有账号？返回 <a href="index_enter.html">登录</a> 或 <a href="member.html">登记入会</a></p>#}
+            </form>
+        </div>
+
+	 </div>
+	 <!--页尾-->
+{% endblock %}
+<!-- End content -->
+
+<!-- footer Start -->
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+<!-- End footer-->

@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>影像资料</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{#    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.config.js') }}"></script>#}
+{#    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.all.js') }}"></script>#}
+{#    <script src="{{ url_for('static', filename='admin/js/article_edit.js') }}"></script>#}
+{% endblock scripts %}
+{% block content %}
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">视频编辑</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="width: 800px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+                <form method="post" enctype=multipart/form-data class="banner_add">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.activ.label }}{{ form.activ(style="width: 270px;height: 40px;") }}
+                    </p>
+
+                    <p>
+                        {{ form.video.label(style="float:left;") }}{{ form.video() }}
+                    </p>
+                    <p>
+                        {{ form.title.label }}{{ form.title(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.time.label(style="float:left;") }}
+                        {{ form.time(style="width: 270px;height: 40px;",class="am-form-field",placeholder="日期选择",readonly='true',required='true',**{'data-am-datepicker':'true'}) }}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(4)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+	<!--校友会新闻-->
+		<div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="#">校友专访</a></p></div>
+		<div class="w1200 clear mt10">
+			<div class="w176 fl">
+				<div class="nav_new">
+					<div></div>
+					<p>校友专访</p>
+				</div>
+				<ul>
+					<li class="on"><a href="#">校友专访</a></li>
+				</ul>
+			</div>
+			<div class="w1001 fr" style="padding-bottom: 50px;">
+				<p class="w1001_p">校友专访</p>
+                {% for inter in inter_alumni %}
+                    {% if loop.index == 1 %}
+                                <div class="clear">
+                                    <img src="{{ url_for('static',filename='upload/' + inter.photo) }}" />
+                                    <div>
+                                        <a href="{{ url_for('project.main.alumni_interview_details',id=inter.id) }}">{{ inter.title }}</a>
+                                        <p>
+                                            {{ inter.content|safe }}……
+                                        </p>
+                                    </div>
+                                </div>
+                    {% else %}
+                                <div class="w860">
+                                  <p><a href="{{ url_for('project.main.alumni_interview_details',id=inter.id) }}">{{ inter.title }}</a><span>{{ inter.time }}</span></p>
+                                </div>
+                    {% endif %}
+            {% endfor %}
+
+        {% if pagination %}
+            <div class="mac-ul">
+                {{ macros.pagination_widget(pagination, 'project.main.alumni_inter') }}
+            </div>
+        {% endif %}
+                            </div>
+
+			</div>
+		</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+{% endblock %}
+{% block content %}
+		<!--跳转详情页-->
+		<div class="w1200 clear mt10 new_alumni_SingleNews" style="margin-top: 50px;">
+			<p style="text-align: center;margin-top: 80px;">
+              <i class="iconfont" style="color: green;font-size: 30px;padding-right: 15px;">&#xe64b;</i><span style="font-size: 24px;">登记成功！请耐心等待审核！</span>
+            </p>
+            <p style="text-align: center;text-indent: 4em;">* <span id="count" data-url="{{ next_url }}">3</span>秒后跳转至首页</p>
+            <p style="text-align: center;"><a href="javascript:history.go(-1)" style="padding:10px 50px;font-size: 20px;background-color: green;outline: none;border: none;color: #fff;margin-left: 50px;">返回</a></p>
+		</div>
+
+
+     <script>
+        $(function(){
+            var num = 3,
+                $count = $('#count'),
+                $url = $count.attr('data-url');
+
+            var countDown = setInterval(function(){
+                num--;
+                $count.html( num );
+                if( num == 0 ){
+                    clearInterval(countDown);
+                    window.location.href = location.origin + $url;
+                }
+            },1000);
+
+        })();
+    </script>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ forum_oss_login_url }}"></script>
+{% endblock %}

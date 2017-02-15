@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+    <!--企业会员-->
+    <div class="w1200"><p class="nav_p"><a href="index.html">首页</a> > <a href="">会员服务</a> > <a href="#">企业会员</a></p>
+    </div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position: -216px -19px;"></div>
+                <p>会员服务</p>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('project.main.member') }}">校友入会</a></li>
+                <li class="on">
+                    <a href="{{ url_for('project.main.CorporateMember') }}">企业会员</a>
+                </li>
+            </ul>
+        </div>
+        <!--校友入会-->
+        <div class="w1001 fr">
+            <p class="w1001_p">企业会员</p>
+            <div class="member" style="border: none;">
+                {% if current_user.enter %}
+                    <p class="member_warning"><span></span>您的企业信息已经填写过了。如有需要可再次添加信息。
+                    </p>
+                {% else %}
+                    <p class="member_warning"><span></span>请认真填写入会表格，提交后会有专员进行审核。我们会将审核情况通知发送到您的邮箱。</p>
+                {% endif %}
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style=" margin-left: 25px;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+
+                <form action="" method="post" id="box" onsubmit="return regin()">
+
+                    <p>
+                        <a href="{{ url_for('project.main.enter') }}" class="form_corpo"
+                           style="color: #333">查看所有入会企业</a>
+                        {#                        <span>*</span>{{ form.username.label }}：{{ form.username(id="name_",onblur="name_blur()",onfocus="name_focus()") }}<samp></samp>#}
+                    </p>
+                    <p>
+                        {#                        <span>*</span>{{ form.sex.label }}：{{ form.sex(class="woman") }}#}
+                        <span>*</span>校友企业名称: {{ form.name(id="class_",onblur="class_blur()",onfocus="class_focus()") }}
+                        <samp></samp>
+                    </p>
+                    <p>
+                        {#                        <span>*</span>{{ form.sex.label }}：{{ form.sex(class="woman") }}#}
+                        <span>*</span>企业法人代表: {{ form.legalPerson(id="names",onblur="name_blur()",onfocus="name_focus()") }}
+                        <samp></samp>
+                    </p>
+                    <p style="padding-left: 9px;">
+                        <span>*</span>企业所在地:
+                        <select style="margin-left: 7px;color: #333;" name="addess_province" id="s_province"
+                                class="info-select">
+
+                        </select>
+                        <select style="color: #333;" name="addess_city" id="s_city" class="info-select ml20">
+
+                        </select>
+                        {#                        {{ form.provice(style='width:100px;height:36px;margin-left:15px;',id="s_province",class="info-select") }}#}
+                        {##}
+                        {#                        {{ form.city(style='width:110px;height:36px;',id="s_city",class="info-select ml20") }}#}
+
+                        <samp></samp>
+                    </p>
+                    <p style="margin-left:10px;"><span>*</span>公 司 规 模:
+                        {#                        {{ form.status.label }}：#}
+                        {{ form.scale(style='margin-left:7px;width:149px;height:36px;',class="info-select") }}
+                        </select>
+                    </p>
+                    <p style="margin-left: 10px;"><span>*</span>企 业 性 质:
+                        {#                        {{ form.status.label }}：#}
+                        {{ form.corProperty(style='width:149px;height:36px;margin-left:7px;',class="info-select") }}
+                    </p>
+                    <p style="margin-left: 10px;"><span>*</span>企 业 类 型:
+                        {#                        {{ form.status.label }}：#}
+                        {{ form.type(style='width:149px;height:36px;margin-left:7px;',class="info-select") }}
+                    </p>
+
+                    <p style="margin-left: 10px;">
+                        <span>*</span>企 业 简 介:
+                        {{ form.intro(style='margin-left:168px;',id="message",placeholder="请填写企业的有关介绍",onblur="ms_blur()",onfocus="ms_focus()") }}
+                        <samp class="message_samp" style="margin-left: 30px;"></samp></p>
+                    <p style="margin-left: 5px;">
+                        <span>*</span>校友联络人:
+                        {{ form.contact(style='margin-left:7px;',id="tel",onblur="tels_blur()",onfocus="tels_focus()") }}
+                        <a href="{{ url_for('project.main.contact_user') }}" class="form_corpo" style="color: #333;">查看所有联络人</a>
+                        <samp></samp></p>
+                    <p style="margin-left: 8px;">
+                        <span>*</span>联 系 电 话:
+                        {{ form.phone(style='margin-left:7px;',id="phones",onblur="phones_blur()",onfocus="phones_focus()") }}
+                        <samp></samp></p>
+                    <p class="member_rule">
+                        <input type="checkbox" name="deal" id="deal"/>同意<a href="#" style="color: #333;">《校友会章程》</a>
+                        <samp></samp></p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                    {{ form.hidden_tag() }}
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--页尾-->
+{% endblock %}
+<!-- End content -->
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for("static", filename="js/corete.js") }}"></script>
+    <script class="resources library" src="{{ url_for("static", filename="js/area.js") }}"></script>
+    <script type="text/javascript">_init_area();</script>
+    <script>
+        $('#s_province').on('change', function () {
+            var province = $('#s_province').val();
+            {#              alert(province);#}
+            $.ajax({
+                url: "/api/enterprise/province",
+                type: 'post',
+                data: {'s_province': province}
+            })
+        });
+
+        $('#s_city').on('change', function () {
+            var city = $('#s_city').val();
+            $.ajax({
+                url: "/api/city",
+                type: 'post',
+                data: {'s_city': city}
+            })
+        });
+    </script>
+{% endblock %}
+<!-- footer Start -->
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+<!-- End footer-->

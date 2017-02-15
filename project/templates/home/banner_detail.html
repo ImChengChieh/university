@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+<meta name="keywords" content="{{ banner_detail.keywords }}">
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+{% endblock %}
+{% block content %}
+		<!--banner新闻详情-->
+		<div class="w1200"><p class="nav_p"><a href="index.html">首页</a> > <a href="">新闻动态</a> > <a href="#">校友会新闻</a> > <a href="#">新闻详情</a></p></div>
+		<div class="w1200 clear mt10 new_alumni_SingleNews">
+			<p>新闻详情</p>
+
+                <h3>{{ banner_detail.title }}</h3>
+                <div style="height: 50px;">
+                    <span style="margin-left:40%">时间:{{ banner_detail.time }} 发布人: admin </span>
+                </div>
+			    <p>{{ banner_detail.content|safe }}</p>
+		        <img src="{{ url_for('static',filename='upload/' + banner_detail.photo) }}"  style="margin-top: 17px;"/>
+{#                <p>{{ banner_detail.keywords }}</p>#}
+
+		</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% import 'article/_recommend.html' as recommend %}
+{% block seo_keywords %}{{ article.seo_keywords }}{% endblock %}
+{% block seo_description %}{{ article.seo_description }}{% endblock %}
+{% block title %}{{ article.seo_title }}{% endblock %}
+{% block banner %}
+    <div class="container-fluid banner ctn">
+        {% include "base/_banner_public.html" %}
+    </div>
+{% endblock %}
+{% block content %}
+    <style>
+        h2 {
+            font-size: 22px;
+            color: #033a95;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: normal;
+            line-height: 35px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        span.info {
+            color: rgb(153, 153, 153);
+            display: block;
+            font-family: 微软雅黑;
+            font-size: 12px;
+            line-height: 12px;
+            padding-top: 10px;
+            word-wrap: break-word;
+        }
+
+        .article_box {
+            margin: 35px auto;
+        }
+
+        .article {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1.5px
+        }
+
+        .article_box .right {
+            padding-left: 20px
+        }
+
+    </style>
+
+    <div class="article_box container">
+        <div class="row">
+            <div class="left col-md-9">
+                <div class="my-breadcrumb">
+                    <a href="/">首页</a> >
+                    <a href="{{ url_for('project.main.article_list',type_id=article.type_id) }}">{{ article.type.name }}</a>
+                    >
+                    {{ article.title }}
+                </div>
+                <div style="display: none">
+                    <h1>{{ article.seo_title }}</h1>
+                </div>
+                <h2>
+                    <a href="{{ url_for('project.main.article_list',type_id=article.type_id) }}">{{ article.type.name }}</a>
+                </h2>
+                <h3>
+                    {{ article.title }}
+                    <span class="info">来源 : {{ article.source }} 　 作者 :  {{ article.author }}　 时间：{{ article.create_at }}</span>
+                </h3>
+                <div class="img">
+                    {% if article.img %}
+                        <img src="{{ article.img }}" alt=""/>
+                    {% endif %}
+                </div>
+                <div class="article">
+                    {{ article.content|safe }}
+                </div>
+                <div>{% include "article/_share.html" %}</div>
+            </div>
+            <div class="right col-md-3">
+                {{ recommend.recommend_articles(hot, newest) }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

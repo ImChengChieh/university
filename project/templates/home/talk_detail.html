@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(4)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <!--校友会新闻>新闻详情-->
+    <div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a
+            href="#">{{ news.type.name }}</a> > <a
+            href="javascript:;">详情</a></p></div>
+    <div class="w1200 clear mt10 new_alumni_SingleNews">
+        <h3>{{ news.title }}</h3>
+        <div class="info">
+            <span>发布人:{{ news.author or "admin" }}</span>
+            &nbsp;&nbsp;
+            <span>{{ news.create_at.strftime('%Y年%m月%d日') }}</span>
+        </div>
+        <div class="img" style="margin-bottom:30px;text-align: center">
+            <img src="{{ news.img }}" alt=""/>
+        </div>
+        {{ news.content|safe }}
+    </div>
+{% endblock %}
+
+
+
+
+

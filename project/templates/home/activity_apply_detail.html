@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(5)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+		<!--活动专栏-->
+		<div class="w1200"><p class="nav_p"><a href="index.html">首页</a> > <a href="">组织活动</a> > <a href="home/activity_apply.html">活动报名</a> > <a href="activity_apply_details.html">活动详情</a></p></div>
+		<div class="w1200 clear mt10">
+			<div class="w176 fl">
+				<div class="nav_new">
+					<div style="background-position: -381px -15px;"></div>
+					<p>活动专栏</p>
+				</div>
+				<ul>
+					<li class="on"><a href="#">活动报名</a></li>
+					<li><a href="{{ url_for('project.main.activity_review') }}">活动回顾</a></li>
+				</ul>
+			</div>
+			<!--活动报名>活动详情-->
+			<div class="w1001 fr">
+				<p class="w1001_p">活动详情</p>
+                {% if current_time < activ.duration  %}
+                    <div class="clear activity_apply_details" style="padding-bottom: 50px;margin-top: 0;border: none;">
+                            <h3>{{ activ.title }}</h3>
+                            <p>活动人数<span>{{ activ.users.count() }}</span>人</p>
+                            <p>计划人数:<span>{{ activ.people }}</span>人</p>
+                            <p>活动时间:{{ activ.startime }}</p>
+                            <p>报名截止时间：{{ activ.deadline }}</p>
+                            <p>活动费用：{{ activ.cost }}元</p>
+                            <p>集合地点：{{ activ.location }}</p>
+                            <img src="{{ url_for('static',filename='images/' + activ.activPic ) }}" style="float: none;margin: 0 auto;margin-top: 23px;"/>
+                            <p>活动配图</p>
+                            <p style="text-align: left;text-indent: 2em;margin-top:38px;">活动描述：{{ activ.introduce|safe }}</p>
+{#                            <input type="button" value="我要报名" style="margin-top: 84px;"/>#}
+                            {% if current_user.is_authenticated %}
+                                    {#                 onclick="chj()"         onclick="this.value='已参加'"#}
+                                {% if current_user not in activ.users.all() %}
+                                    {% if current_time < activ.deadline %}
+                                        {% if activ.users.count() >= activ.people  %}
+                                            <input class="vis" id="vis"  type="button" value="人数已满"
+                                                   data-use="{{ activ.id }}" data-user-id="{{ current_user.id }}" style="margin-top: 84px;" />
+                                        {% else %}
+                                            <input class="vis" id="vis"  type="button" value="我要报名"
+                                                   data-use="{{ activ.id }}" data-user-id="{{ current_user.id }}" style="margin-top: 84px;" />
+                                        {% endif %}
+                                    {% else %}
+                                        <input class="vis" id="vis"  type="button" value="报名已截止"
+                                                   data-use="{{ activ.id }}" data-user-id="{{ current_user.id }}" style="margin-top: 84px;" />
+                                    {% endif %}
+                                {% else %}
+                                    <input class="vis" id="vis"  type="button" value="报名成功"
+                                           data-use="{{ activ.id }}" data-user-id="{{ current_user.id }}" style="margin-top: 84px;" />
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ url_for('project.main.index_enter') }}"><input type="button" value="我要报名"
+                                                                                           style="margin-top: 84px;"/></a>
+                            {% endif %}
+                    </div>
+                {% else %}
+                    <div class="clear activity_apply_details" style="padding-bottom: 50px;margin-top: 0;border: none;">
+                            <h3>{{ activ.title }}</h3>
+                            <p>活动人数<span>{{ activ.users.count() }}</span>人</p>
+                            <p>计划人数:<span>{{ activ.people }}</span>人</p>
+                            <p>活动时间:{{ activ.startime }}</p>
+                            <p>报名截止时间：{{ activ.deadline }}</p>
+                            <p>活动费用：{{ activ.cost }}元</p>
+                            <p>集合地点：{{ activ.location }}</p>
+                            <img src="{{ url_for('static',filename='images/' + activ.activPic ) }}" style="float: none;margin: 0 auto;margin-top: 23px;"/>
+                            <p>活动配图</p>
+                            <p style="text-align: left;text-indent: 2em;margin-top:38px;">活动描述：{{ activ.introduce|safe }}</p>
+                            <input type="button" value="活动已结束" style="margin-top: 84px;"/>
+
+                    </div>
+                {% endif %}
+		    </div>
+		</div>
+{% endblock %}

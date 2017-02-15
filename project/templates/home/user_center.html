@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{#    <link rel="stylesheet" href="{{ url_for("static", filename="css/.css") }}" type="text/css"/>#}
+{% endblock %}
+
+{% block title %}{{ super() }}{% endblock %}
+{% block top %}
+    {{ super() }}
+{% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+<!-- content Start -->
+{% block content %}
+		<div class="w1200"><p class="nav_p"><a href="{{ url_for('project.main.index') }}">首页</a> > <a href="">个人中心</a><a href="home/activity_apply.html"></a></p></div>
+		<!--个人中心-->
+		<div class="w1200 clear mt10">
+			<!--左导航-->
+			<div class="w176" style="display: inline-block;">
+				<div class="nav_new">
+					<div style="background: url(../static/images/u1.png) no-repeat 10px 2px;"></div>
+					<p>个人中心</p>
+				</div>
+				<ul>
+					<li class="on"><a href="{{ url_for('project.main.index_modify',id=current_user.id) }}">个人入会信息</a></li>
+					<li><a href="{{ url_for('project.main.index_enterprise',id=current_user.id) }}">企业入会信息</a></li>
+					<li><a href="{{ url_for('project.main.index_password') }}">密码修改</a></li>
+				</ul>
+			</div>	
+			<!--个人信息-->
+			<div class="w1001 fr index_register" style="margin-top: 0;">
+				<p class="w1001_p">个人入会信息</p>
+				<div class="w520 fl" style="width: 520px;border-bottom: none;">
+			 		<div class="w252 fl">
+                        <img src="{{ url_for("static", filename="images/register_img1.jpg") }}"/>
+                        <img src="{{ url_for("static", filename="images/register_img4.jpg") }}"/>
+                    </div>
+                    <div class="w264 fr">
+                        <img src="{{ url_for("static", filename="images/register_img2.jpg") }}"/>
+                        <img src="{{ url_for("static", filename="images/register_img3.jpg") }}"/>
+                        <img src="{{ url_for("static", filename="images/register_img5.jpg") }}"/>
+                        <img src="{{ url_for("static", filename="images/register_img6.jpg") }}"/>
+                        <img src="{{ url_for("static", filename="images/register_img7.jpg") }}"/>
+                    </div>
+			 		<div class="clear"></div>
+			 	</div>
+            {% if user_detail.name != None  %}
+                {% if user_detail.verify == 1 %}
+                    <img class="img-absolute" src="{{ url_for('static',filename='images/verify_1.png') }}">
+                {% else %}
+                    <img class="img-absolute" src="{{ url_for('static',filename='images/verify_2.png') }}">
+                {% endif %}
+				<div class="l_messge">
+					<p>姓名：<span>{{ user_detail.name }}</span></p>
+					<p>性别：
+                        {% if user_detail.sex == 0 %}
+                            <span>男</span>
+                        {% else %}
+                            <span>女</span>
+                        {% endif %}
+                    </p>
+					<p>身份：
+                        {% if user_detail.status|int  == 1 %}
+                            <span>学院教职工</span>
+                        {% elif  user_detail.status|int  == 2%}
+                            <span>学院特聘人员</span>
+                        {% elif user_detail.status|int  == 3%}
+                            <span>毕业研究生</span>
+                        {% elif user_detail.status|int  == 4%}
+                            <span>全日制本科毕业生</span>
+                        {% elif user_detail.status|int  == 5%}
+                            <span>城市学院毕业生</span>
+                        {% elif user_detail.status|int  == 6%}
+                            <span>网络教育毕业生</span>
+                        {% elif user_detail.status|int  == 7%}
+                            <span>成教自考生</span>
+                        {% endif %}
+                    </p>
+					<p>入学班级：<span>{{ user_detail.grade }}</span></p>
+					<p>联络人：<span>{{ user_detail.contact }}</span></p>
+                    <p>地理位置：<span>{{ user_detail.province }}{{ user_detail.city }}</span></p>
+					<p>出生信息：<span>{{ user_detail.birthday }}</span></p>
+					<p>联系电话：<span id="phone">{{ user_detail.phone }}</span><a href="javascript:void(0)" style="float: right;" onclick="ShowDiv(1)"><button>修改</button></a></p>
+					<p>联络邮箱：<span id="email">{{ user_detail.email }}</span><a href="javascript:void(0)" style="float: right;" onclick="closeDiv(1)"><button>修改</button></a></p>
+                    <p>验证信息：<span>{{ user_detail.identInfor }}</span></p>
+                    <div id="close"
+                         style="position:absolute !important;left:30%;top:0px;z-index:3;background-color:#fff;margin:100px auto;padding:0px;display:none;width:350px;height:300px;text-align:right;border-radius: 10px;">
+                        <a href="javascript:void(0);" onclick="ShowDiv(0)" style="padding:1em;line-height: 2em;text-decoration: none;">关闭</a>
+
+                        <div style="text-align:center;">
+                            {% for message in get_flashed_messages() %}
+                                <div class="alert alert-warning" style="width: 100%;height: 10px;color:red;">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                            <form method="post" class="modify_f" onsubmit="return sub()">
+                                {{ preform.hidden_tag() }}
+                                <p style="margin: 0;">
+                                    {{ preform.old_phone.label(style='padding-right:10px;')}}{{ preform.old_phone(required='false',id="old_phone") }}
+                                </p>
+                                 <p style="margin: 10px 0;height: 25px;text-align: left;padding-left: 7.5em;color: red;" id="ophone"></p>
+                                <p style="padding-left: 0;margin: 0;">
+                                    {{ preform.new_phone.label(style='padding-right:10px;') }}{{ preform.new_phone(required='false',id="new_phone") }}
+                                </p>
+                                 <p style="margin: 10px 0;height: 25px;text-align: left;padding-left: 7.5em;color: red;" id="nphone"></p>
+                                <p>{{ preform.submit(style="padding-left: 0px;width:100px;height:30px;background:red;color:#fff;outline: none;border:none;",class="modify_phone") }}</p>
+                            </form>
+                        </div>
+                    </div>
+                    {#  弹出层结束  #}
+
+
+                    <div id="close1"
+                         style="position:absolute !important;left:30%;top:0px;z-index:3;background-color:#fff;margin:100px auto;padding:0px;display:none;width:350px;height:300px;text-align:right;border-radius: 10px;">
+                        <a href="javascript:void(0);" onclick="closeDiv(0)" style="padding:1em;line-height: 2em;text-decoration: none;">关闭</a>
+
+                        <div style="text-align:center;">
+                            {% for message in get_flashed_messages() %}
+                                <div class="alert alert-warning" style="width: 100%;height: 10px;color:red;">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+
+                            <form method="post" onsubmit="return sub1()">
+                                {{ form.hidden_tag() }}
+                                <p style="margin-top: 25px;margin-left: -30px;padding-left: 0;margin: 10px 0;">{{ form.old_email.label }}{{ form.old_email( required='true',id='old_email',style='height: 30px;margin-left: 10px;text-indent:1em;') }}</p>
+                                <p style="margin: 10px 0;height: 25px;text-align: left;padding-left: 7.5em;color: red;" id="oemail"></p>
+                                <p style="margin-top: 40px;margin-left: -30px;padding-left: 0;margin: 10px 0;">{{ form.new_email.label }}{{ form.new_email( required='true',id='new_email',style='height: 30px;margin-left: 10px;text-indent:1em;') }}</p>
+                                <p style="margin: 10px 0;text-align: left;padding-left: 7.5em;height: 25px;color: red;" id="nemail"></p>
+                                {{ form.submit(style='width:100px;height:30px;background:red;color:#fff;ouline:none;border:none;',id='btn') }}
+                            </form>
+                        </div>
+                    </div>
+
+				</div>
+            {% else %}
+                <div class="l_messge">
+                    <p><a href="{{ url_for('project.main.member') }}">您未入会？,登记<span style="color: red;">入会</span></a></p>
+                </div>
+            {% endif %}
+			</div>
+		</div>			
+		<!--页尾-->
+
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+    {#  号码弹出层开始  #}
+    <div id="ceng"
+         style="position:absolute;z-index:2;left:0;top:0;background:rgba(0,0,0,0.3);filter:alpha(opacity=50);display:none;width:100%;height:176%;">
+    </div>
+    <div id="ceng1"
+         style="position:absolute;z-index:2;left:0;top:0;right:0;background:rgba(0,0,0,0.3);filter:alpha(opacity=50);display:none;width:100%;height:176%;">
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        function ShowDiv(s) {
+            if (s > 0) {
+                document.getElementById('ceng').style.display = 'block';
+                document.getElementById('close').style.display = 'block';
+            } else {
+                document.getElementById('ceng').style.display = 'none';
+                document.getElementById('close').style.display = 'none';
+            }
+        }
+        function  sub() {
+            var phone=document.getElementById('phone');
+            var ophone=document.getElementById('old_phone');
+            var nphone=document.getElementById('new_phone');
+            if(ophone.value!=nphone.value && phone.innerHTML==ophone.value){
+
+            }
+            if( phone.innerHTML!=ophone.value){
+                document.getElementById('ophone').innerHTML = '请输入正确的原手机号！';
+                return false;
+            }else {
+
+                document.getElementById('ophone').innerHTML = '';
+
+            }
+            if(nphone.value==ophone.value){
+                document.getElementById('nphone').innerHTML = '不能与原手机号一致！';
+                return false;
+            }
+            if(!/^1(3|4|7|5|8)([0-9]{9})/.test(nphone.value) || /^0[0-9]{2,3}-[0-9]{8}/.test(nphone.value)){
+                document.getElementById('nphone').innerHTML = '手机号码格式错误！';
+                return false;
+            }
+            else {
+
+               document.getElementById('nphone').innerHTML = '';
+                alert('修改成功！');
+
+            }
+
+        }
+
+
+    function closeDiv(s) {
+            if (s > 0) {
+                document.getElementById('ceng1').style.display = 'block';
+                document.getElementById('close1').style.display = 'block';
+            }else {
+                document.getElementById('ceng1').style.display = 'none';
+                document.getElementById('close1').style.display = 'none';
+            }
+        }
+        function  sub1() {
+            var email=document.getElementById('email');
+            var old_email=document.getElementById('old_email');
+            var new_email =document.getElementById('new_email');
+            var btn=document.getElementById('btn');
+
+            if( email.innerHTML!=old_email.value){
+                document.getElementById('oemail').innerHTML = '请输入正确的原邮箱！';
+                return false;
+            }else {
+
+                document.getElementById('oemail').innerHTML = '';
+
+            }
+            if(old_email.value==new_email.value){
+                document.getElementById('nemail').innerHTML = '不能与原邮箱一致！';
+                return false;
+            }
+            if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(new_email.value) ){
+                document.getElementById('nemail').innerHTML = '邮箱格式错误！';
+                return false;
+            }
+            else {
+
+               document.getElementById('nemail').innerHTML = '';
+
+
+            }
+             alert('修改成功！');
+        }
+
+    </script>
+{% endblock %}
+

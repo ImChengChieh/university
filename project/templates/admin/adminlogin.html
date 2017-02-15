@@ -1,0 +1,14 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+{{ super() }}
+    <div style="margin-left: 45%;margin-top: 10%;">
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}{{ form.username(id='username',style="width: 200px;height: 30px;margin-left:15px;") }}{{ form.username.errors[0] }}<br>
+        {{ form.password.label }}{{ form.password(id='password',style="width: 200px;height: 30px;margin-left:15px;") }}{{ form.password.errors[0] }}<br>
+        {{ form.remember_me.label }}{{ form.remember_me(id='remember_me') }}<br>
+        {{ form.submit() }}<input type="reset">
+    </form>
+    </div>
+{% endblock %}

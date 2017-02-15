@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}西科大成都校友会土建分会{% endblock %}
+<meta name="keywords" content="西南科技大学,成都校友会,土建分会" />
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(3)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <!--组织机构-->
+    <div class="w1200"><p class="nav_p"><a href="index.html">首页</a> > <a href="">校友招聘</a>  </p>
+    </div>
+    <div class="w1200 clear mt10">
+        <div class="w176 fl">
+            <div class="nav_new">
+                <div style="background-position: -45px -15px;"></div>
+                <p>组织机构</p>
+            </div>
+            <ul>
+                <li class="on"><a href="#">校友招聘</a></li>
+
+            </ul>
+        </div>
+        <!--校友会章程-->
+        <div class="w1001 fr" style="height: 500px;">
+            <p class="w1001_p"></p>
+            <div class="clear organization_rule" style="border: none;">
+                {% for ope in reccuit %}
+                    <h3>{{ ope.title }}</h3>
+                    <p style="font-size: 16px;text-indent:50px;line-height: 30px;">{{ ope.content|safe }}</p>
+                {% endfor %}
+
+            </div>
+{#            <div class="w860">#}
+{#                <ul>#}
+{#                    <li style="margin-right: 10px;"><a href="#">首页</a></li>#}
+{#                    <li><a href="#">1</a></li>#}
+{#                    <li class="on"><a href="#">2</a></li>#}
+{#                    <li><a href="#">3</a></li>#}
+{#                    <li><a href="#">···</a></li>#}
+{#                    <li style="margin-left: 10px;"><a href="#">尾页</a></li>#}
+{#                </ul>#}
+{#            </div>#}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+

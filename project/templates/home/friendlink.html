@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(1)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="w1200"><p class="nav_p"><a href="index.html">首页</a> > <a href="new_alumni.html">企业名录</a></p></div>
+		<div class="w1200 clear mt10">
+			<div class="w176 fl">
+				<div class="nav_new">
+					<div></div>
+					<p>企业logo</p>
+				</div>
+				<ul>
+					<li class="on"><a href="#">企业名单</a></li>
+				</ul>
+			</div>
+			<div class="w1001 fr">
+				<p class="w1001_p">友情链接</p>
+                <div class="am-g">
+                <div class="am-u-sm-12" style="width: 100%;height: 100%;">
+                    <form style="font-weight: 300;">
+                        <table>
+                            <thead>
+                            <tr style="width: 100%;">
+{#                                <th style="width: 200px;">系别</th>#}
+{#                                <th class="table-type" style="width: 150px;">用户名</th>#}
+{#                                <th style="width: 350px;">企业logo</th>#}
+{#                                <th style="width: 150px;">企业网址</th>#}
+                            </tr>
+                            </thead>
+                            <tbody>
+{#                            {% for links in links %}#}
+{#                                <tr>#}
+{#                                   <li><a href="{{ links.link }}"><img
+{#                                            src="{{ links.img }}" width="157" height="52"/></a>#}
+{#                                    </li>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+                            <ul class="link_logo">
+                                {% for friend_link in links %}
+                                    <li><a href="{{ friend_link.link }}">
+                                        <img src="{{ url_for("static", filename='upload/'+ friend_link.img) }}" width="157" height="52"/></a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+            </div>
+
+			</div>
+		</div>
+{% endblock %}

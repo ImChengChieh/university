@@ -1,0 +1,86 @@
+{% macro recommend_articles(hot_articles, new_articles) %}
+    <style>
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .recommend_list .row {
+            height: 100px
+        }
+
+        .recommend_list .row .img {
+            line-height: 100px;
+        }
+
+        .recommend_list .row .title {
+            font-size: 14px;
+            padding: 5px;
+            line-height: 20px
+        }
+
+        span.tit {
+            cursor: pointer;
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+            font-weight: normal;
+        }
+
+        .block_a {
+            display: block;
+        }
+    </style>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#hot" data-toggle="tab"><span class="tit">热门</span></a></li>
+        <li><a href="#new" data-toggle="tab"><span class="tit">近期</span></a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="hot">
+            <ul class="recommend_list">
+                {% for article in hot_articles %}
+                    <li class="row">
+                        <div class="img col-md-5">
+                            <a class="block_a" href='{{ url_for("project.main.detail", id=article.id) }}'>
+                                <img src="{{ article.img }}"
+                                     alt="" width="75px"
+                                     height="50px"
+                                     onerror="this.src='/static/upload/27609f30-6b78-11e6-9678-005056c00008.jpg'">
+                            </a>
+                        </div>
+                        <div class="title col-md-7">
+                            <a class="block_a" href="{{ url_for("project.main.detail", id=article.id) }}">
+                                {{ article.content|striptags|truncate(35) }}
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="new">
+            <ul class="recommend_list">
+                {% for article in new_articles %}
+                    <li class="row">
+                        <div class="img col-md-5">
+                            <a class="block_a" href='{{ url_for("project.main.detail", id=article.id) }}'>
+                                <img src="{{ article.img }}"
+                                     alt="" width="75px"
+                                     height="50px"
+                                     onerror="this.src='/static/upload/27609f30-6b78-11e6-9678-005056c00008.jpg'">
+                            </a>
+                        </div>
+                        <div class="title col-md-7">
+                            <a class="block_a" href="{{ url_for("project.main.detail", id=article.id) }}">
+                                {{ article.content|striptags|truncate(35) }}
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+{% endmacro %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as macros %}
+{% import 'article/_recommend.html' as recommend %}
+{% block banner %}
+    <div class="container-fluid banner ctn">
+        {% include "base/_banner_public.html" %}
+    </div>
+{% endblock %}
+{% block style %}
+    {{ super() }}
+    <style>
+        ul, li {
+            list-style: none;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #033a95;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: normal;
+            line-height: 35px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .list_box {
+            margin: 35px auto;
+        }
+
+        .article_list {
+            margin-bottom: 50px;
+        }
+
+        .article_list li {
+            border-bottom: 1px solid #ececec;
+            padding-bottom: 20px
+        }
+
+        .article_title {
+            margin: 25px auto 10px auto;
+        }
+
+        .article_title > span {
+            display: block;
+            font-size: 16px
+        }
+
+        .article {
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        .pager > li {
+            float: left;
+            margin: 5px 2px
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="list_box container">
+        <div class="my-breadcrumb">
+            <a href="/">首页</a> >
+            {{ type_name }}
+        </div>
+        <div class="row">
+            <div class="left col-md-9">
+                <h2>【{{ type_name }}】列表</h2>
+                <ul class="article_list">
+                    {% for p in article_l.items %}
+                        <li>
+                            <h3 class="article_title">
+                                <a href="/article/detail/{{ p.id }}">{{ p.title|truncate(16) }}</a><span>发布日期 {{ p.create_at }}</span>
+                            </h3>
+                            <p class="article">
+                                {{ p.content|striptags|truncate(60) }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="page">
+                    {{ macros.pagination_widget(article_l,'project.main.article_list', type_id = type_id) }}
+                </div>
+            </div>
+            <div class="right col-md-3">
+                {{ recommend.recommend_articles(hot, newest) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

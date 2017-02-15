@@ -1,0 +1,19 @@
+<!--banner-->
+<div class="banner clear" id="banner">
+        <div class="banner_sm" id="banner_sm">
+            {% for banner in banner_news %}
+                <div class="w1200">
+					<i>
+                        <p id='headr_text'><a href="{{ url_for('project.main.banner_news',id=banner.id) }}">{{ banner.title }}</a></p>
+                        <p id="banner_innerhtml">{{ banner.content|striptags }}</p>
+                    </i>
+                    <img src="{{ url_for("static", filename="upload/" + banner.photo) }}"  id="banner_img" style="margin-left: -30%;"/>
+				</div>
+            {% endfor %}
+        </div>
+    <ul id="banner_paging">
+        <li style="background-color: #fff;"></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>

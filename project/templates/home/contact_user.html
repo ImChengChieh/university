@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}联络人名单{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(1)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+		<div class="w1200 clear mt10">
+			<div class="w1001 fr">
+{#				<p class="w1001_p">校友名录</p>#}
+                <div class="am-g">
+                <div class="am-u-sm-12" style="width: 100%;height: 100%;">
+                    <form style="font-weight: 300;">
+                        <table  cellSpacing=0 borderColor=#ddd border="1px solid blue;" style="margin: 50px auto;">
+                            <thead>
+                            <tr style="width: 100%;">
+                                <th style="width: 200px;">企业单位</th>
+                                <th style="width: 350px;">联络人姓名</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in user %}
+                                <tr>
+                                    <th>{{ user.CoporateName }}</th>
+                                    <th>{{ user.username }}</th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            </div>
+
+			</div>
+		</div>
+    <style>
+        th {text-align: center;  padding: 10px;}
+    </style>
+{% endblock %}

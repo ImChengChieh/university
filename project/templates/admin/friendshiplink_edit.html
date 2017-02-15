@@ -1,0 +1,154 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>编辑合作伙伴</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/ueditor/ueditor.all.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/friendshiplink_edit.js') }}"></script>
+{% endblock scripts %}
+{% block content %}
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-lg">编辑</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+
+            <hr>
+{#            {% if friendshiplink %}#}
+{#                <form class="am-form" id="article">#}
+{#                <div class="am-tabs am-margin" data-am-tabs>#}
+{##}
+{#                    <div class="am-tab-panel am-fade am-in am-active" id="tab2">#}
+{##}
+{#                        <div class="am-g am-margin-top am-form-group">#}
+{#                            <div class="am-u-sm-4 am-u-md-2 am-text-right">#}
+{#                                合作伙伴名称<input hidden="hidden" name="id" value="{{ friendshiplink.id }}" id="id">#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-8 am-u-md-4">#}
+{#                                <input class="title" type="text" class="am-input-sm" required value="{{ friendshiplink.title }}">#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="am-g am-margin-top">#}
+{#                            <div class="am-u-sm-4 am-u-md-2 am-text-right">#}
+{#                                合作伙伴LOGO#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-10 am-md-4 am-form-group">#}
+{#                                   {% if friendshiplink.img %}#}
+{#                                        <input id="file_cover" type="file" class="am-input-sm"#}
+{#                                               data-img-src="{{ friendshiplink.img }}" value="{{ friendshiplink.img }}">#}
+{#                                        <img width="200" src="{{ friendshiplink.img }}" data-img-src="{{ friendshiplink.img }}">#}
+{#                                    {% else %}#}
+{#                                        <input id="file_cover" type="file" class="am-input-sm">#}
+{#                                    {% endif %}#}
+{#                            </div>#}
+{#                            <span id="img-src" style="display: none;"></span>#}
+{#                        </div>#}
+{##}
+{#                        <div class="am-g am-margin-top-sm">#}
+{#                            <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">#}
+{#                                链接地址#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-12 am-u-md-10 am-form-group">#}
+{#                                <input type="text" class="am-input-sm" id="detail" name="detail" value="{{ friendshiplink.link }}">#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{##}
+{#                </div>#}
+{##}
+{#                <div class="am-margin" style="margin-left: 25.4rem;">#}
+{#                    <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>#}
+{#                    <button type="reset" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>#}
+{#                </div>#}
+{#            </form>#}
+{#            {% else %}#}
+{#                <form class="am-form" id="article">#}
+{#                <div class="am-tabs am-margin" data-am-tabs>#}
+{##}
+{#                    <div class="am-tab-panel am-fade am-in am-active" id="tab2">#}
+{##}
+{#                        <div class="am-g am-margin-top am-form-group">#}
+{#                            <div class="am-u-sm-4 am-u-md-2 am-text-right">#}
+{#                                合作伙伴名称<input hidden="hidden" name="id" value="" id="id">#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-8 am-u-md-4">#}
+{#                                <input class="title" type="text" class="am-input-sm" required>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="am-g am-margin-top">#}
+{#                            <div class="am-u-sm-4 am-u-md-2 am-text-right">#}
+{#                                合作伙伴LOGO#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-10 am-md-4 am-form-group">#}
+{#                                <input id="file_cover" type="file" class="am-input-sm">#}
+{#                            </div>#}
+{#                            <span id="img-src" style="display: none;"></span>#}
+{#                        </div>#}
+{##}
+{#                        <div class="am-g am-margin-top-sm">#}
+{#                            <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">#}
+{#                                链接地址#}
+{#                            </div>#}
+{#                            <div class="am-u-sm-12 am-u-md-10 am-form-group">#}
+{#                                <input type="text" class="am-input-sm" id="detail" name="detail">#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{##}
+{#                </div>#}
+{##}
+{#                <div class="am-margin" style="margin-left: 25.4rem;">#}
+{#                    <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>#}
+{#                    <button type="reset" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>#}
+{#                </div>#}
+{#            </form>#}
+{#            {% endif %}#}
+             <div class="am-g">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style=" color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+                <form method="post" enctype=multipart/form-data class="banner_add" style="width: 400px;">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.title.label }}{{ form.title(style="width: 270px;height: 40px;") }}
+                    </p>
+                    <p>
+                        {{ form.link.label }}{{ form.link(style="width: 270px;height: 40px;") }}<br/><span style="color: red;padding-left: 80px;">*格式如:http://www.baidu.com</span>
+                    </p>
+                    <p>
+                        {{ form.img.label(style="float:left;") }}{{ form.img() }}
+                    </p>
+                    <p>
+                        <img src="{{ url_for('static',filename='upload/'+link_img.img) }}" style="width: 200px;height: 60px;margin-left: 60px;"/>
+                    </p>
+                    <p style="margin-left:60px;">
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+{#        <footer class="admin-content-footer">#}
+{#            <hr>#}
+{#            <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>#}
+{#        </footer>#}
+    </div>
+    <!-- content end -->
+{% endblock content %}

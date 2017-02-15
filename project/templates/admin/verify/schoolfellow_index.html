@@ -1,0 +1,198 @@
+{% extends "admin/base.html" %}
+{% import "_macros.html" as macros %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>入会审核</small>
+    </div>
+{% endblock page_name %}
+
+
+{% block content %}
+    <!-- modal start -->
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="delete-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">提示</div>
+            <div class="am-modal-bd">
+                你，确定要删除这条记录吗？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">校友入会</strong> /
+                    <small>fellow</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-6">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a href="{{ url_for("project.admin.add_schoolfellow") }}" class="am-btn am-btn-default">
+                                <span class="am-icon-plus"></span>
+                                校友入会添加
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" action="{{ url_for('project.admin.fellow_list') }}">
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-input-group am-input-group-sm">
+{#                        <input id="keywords" type="text" class="am-form-field">#}
+                        {{ search_form.keywords(id="keywords",class="am-form-field") }}
+          <span class="am-input-group-btn">
+{#            <button id="do_find" class="am-btn am-btn-default" type="button">搜索</button>#}
+              {{ search_form.submit(id="do_find",class="am-btn am-btn-default") }}
+          </span>
+                    </div>
+                </div>
+                    {{ search_form.hidden_tag() }}
+                </form>
+            </div>
+
+
+                <div class="am-g">
+                <div class="am-u-sm-12">
+                    <form class="am-form">
+                        <table  class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th class="table-id">ID</th>
+                                <th style="width: 8%;">姓名</th>
+                                <th style="width: 5%;">性别</th>
+                                <th style="width: 10%;">身份</th>
+                                <th style="width: 8%;">班级</th>
+                                <th style="width: 8%;">联络人</th>
+                                <th style="width: 10%;">地理位置</th>
+                                <th style="width: 10%;">出生日期</th>
+                                <th style="width: 10%;">电话</th>
+                                <th style="width: 10%;">邮箱</th>
+                                <th style="width: 10%;">类型操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in activities %}
+                                <tr>
+                                    <th class="addalumni_edit_id">{{ user.id }}</th>
+                                    <th><a href="{{ url_for('project.main.index_modify',id=user.id) }}">{{ user.name }}</a></th>
+                                    {% if user.sex == 0 %}
+                                        <th>男</th>
+                                    {% else %}
+                                        <th>女</th>
+                                    {% endif %}
+                                {% if user.status|int  == 1 %}
+                                    <th>学院教职工</th>
+                                {% elif  user.status|int  == 2%}
+                                    <th>学院特聘人员</th>
+                                {% elif user.status|int  == 3%}
+                                    <th>毕业研究生</th>
+                                {% elif user.status|int  == 4%}
+                                    <th>全日制本科毕业生</th>
+                                {% elif user.status|int  == 5%}
+                                    <th>城市学院毕业生</th>
+                                {% elif user.status|int  == 6%}
+                                    <th>网络教育毕业生</th>
+                                {% elif user.status|int  == 7%}
+                                    <th>成教自考生</th>
+                                {% endif %}
+                                    <th>{{ user.grade }}</th>
+                                    <th>{{ user.contact }}</th>
+                                    <th>{{ user.province }}{{ user.city }}</th>
+                                    <th>{{ user.birthday }}</th>
+                                    <th>{{ user.phone }}</th>
+                                    <th>{{ user.email }}</th>
+                                        {% if user.verify ==True %}
+                                            <th id="Frozen_account" class="Frozen_account" data-id="{{ user.id }}">
+                                                <span>
+{#                                                                <input value="已审核" type="button" />#}
+                                                    <a href="javascript:void(0)" type="button" >已审核</a>
+                                                </span>
+                                            </th>
+                                        {% else %}
+                                            <th id="Frozen_account" class="Frozen_account" data-id="{{ user.id }}">
+                                                <span>
+                                                             <a href="javascript:void(0)" type="button" >审核中</a>
+                                                </span>
+                                            </th>
+                                        {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr/>
+                    </form>
+                {% if pagination %}
+                    <div class="mac-ul">
+                        {{ macros.pagination_widget(pagination, 'project.admin.fellow_list') }}
+                    </div>
+                {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- content end -->
+{% endblock content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/admin_list.js') }}"></script>
+    <script>
+        window.onload = function () {
+            $('.Frozen_account').on('click', function () {
+                var $this = $(this);
+                var id = $(this).parent().children().eq(0).text();
+{#                alert(id);#}
+                $.ajax({
+                    type:"post",
+                    data:{'id':id},
+                    url:"/admin/api/veriry_list",
+                    success:function (data) {
+{#                        if (data == '0'){#}
+{#                            $this.html('审核中').css("color","#0e90d2");#}
+{#                        }else{#}
+{#                            alert('已审核，邮件已经下发成功！');#}
+{#                            $this.html('已审核').css("color","#0e90d2");#}
+{#                        }#}
+                        if (data == '1'){
+                            alert('已审核，邮件已经下发成功！');
+                            $this.html('已审核').css("color","#0e90d2");
+                        }
+                    }
+                })
+            });
+
+             $('.Frozen_account').on('click', function () {
+                var $this = $(this);
+                var email = $(this).parent().children().eq(9).text();
+                $.ajax({
+                    type:"post",
+                    data:{'email':email},
+                    url:"/admin/api/send_email",
+                    success:function (data) {
+
+                    }
+                })
+            });
+
+
+        }
+    </script>
+
+{% endblock scripts %}

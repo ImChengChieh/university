@@ -1,0 +1,178 @@
+{% extends "admin/base.html" %}
+{% import "_macros.html" as macros %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>首页</small>
+    </div>
+{% endblock page_name %}
+
+{% block content %}
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> /
+                    <small>index</small>
+                </div>
+            </div>
+
+            <hr>
+
+                <div class="am-g">
+                <div class="am-u-sm-12">
+
+                <div class = "container" style="margin:0 350px 30px;color: red;">
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning" style="width: 100%;height: 10px;">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                    <form class="am-form">
+                        <table  class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th>导航类型</th>
+                                <th>已审核数</th>
+                                <th>未审核数</th>
+                                <th>总记录数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>校友入会</th>
+                                    <th>{{ user_verified }}</th>
+                                    <th>{{ user_Unverified }}</th>
+                                    <th>{{ user }}</th>
+                                </tr>
+                                <tr>
+                                    <th>企业入会</th>
+                                    <th>{{ Cooperate_verify }}</th>
+                                    <th>{{ Cooperate_virify }}</th>
+                                    <th>{{ verify_Cooperate }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Banner新闻</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ banner }}</th>
+                                </tr>
+                                <tr>
+                                    <th>新闻动态</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ news }}</th>
+                                </tr>
+                                <tr>
+                                    <th>校友专访</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ interview }}</th>
+                                </tr>
+                                <tr>
+                                    <th>校友招聘</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ recuit }}</th>
+                                </tr>
+                                <tr>
+                                    <th>互助合作</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ cooperate_index }}</th>
+                                </tr>
+                                <tr>
+                                    <th>校友会简介</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ introduce }}</th>
+                                </tr>
+                                <tr>
+                                    <th>校友会联络人</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ contact }}</th>
+                                </tr>
+                                <tr>
+                                    <th>活动发布</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ activity }}</th>
+                                </tr>
+                                <tr>
+                                    <th>照片资料</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ photo }}</th>
+                                </tr>
+                                <tr>
+                                    <th>视频资料</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ video }}</th>
+                                </tr>
+                                <tr>
+                                    <th>捐赠名单</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ donation }}</th>
+                                </tr>
+                                <tr>
+                                    <th>友情链接</th>
+                                    <th>/</th>
+                                    <th>/</th>
+                                    <th>{{ link }}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr/>
+                    </form>
+                {% if pagination %}
+                    <div class="mac-ul">
+                        {{ macros.pagination_widget(pagination, 'project.admin.user_index') }}
+                    </div>
+                {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- content end -->
+{% endblock content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/admin_list.js') }}"></script>
+    <script>
+        window.onload = function () {
+            $('.Frozen_account').on('click', function () {
+                var $this = $(this);
+                var id = $(this).parent().children().eq(0).text();
+{#                var attr = $(this).closest('.Frozen_account').attr('data-id');#}
+{#                alert(attr);#}
+                $.ajax({
+                    type:"post",
+{#                    data:{'data-id':attr},#}
+                    data:{'id':id},
+                    url:"/admin/api/admin_list",
+                    success:function (data) {
+                        if (data == '0'){
+{#                            alert($this.val())#}
+                            $this.val('冻结账户');
+                        }else{
+                            $this.val('解冻账户');
+                        }
+                    }
+                })
+
+            });
+        }
+    </script>
+
+{% endblock scripts %}

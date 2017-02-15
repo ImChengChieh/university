@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+{% block page_name %}
+    <div class="am-topbar-brand">
+        <strong>后台管理</strong>
+        <small>修改密码</small>
+    </div>
+{% endblock page_name %}
+{% block scripts %}
+    {{ super() }}
+{% endblock scripts %}
+{% block content %}
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">修改密码</strong> /
+                    <small>edit</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g form_ag">
+                {% for field in form.errors %}
+                    {% for error in form.errors[field] %}
+                        <li style="width: 350px;margin: 0 auto;color: #f00;" class="alert mt10 alert-success">
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+
+                <div class = "container" style="margin:0px 350px 50px;color: red;">
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning" style="width: 100%;height: 10px;">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <form method="post" enctype=multipart/form-data style="" class="contact_add">
+                    {{ form.hidden_tag() }}
+                    <p style="width: 360px;">
+                        {{ form.old_password.label }}{{ form.old_password(style="width: 270px;height: 40px;text-indent: 1em;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.new_password.label }}{{ form.new_password(style="width: 270px;height: 40px;text-indent: 1em;") }}
+                    </p>
+                    <p style="width: 360px;">
+                        {{ form.repassword.label(style="margin-left: -15px;") }}{{ form.repassword(style="width: 270px;height: 40px;text-indent: 1em;") }}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+{% endblock content %}

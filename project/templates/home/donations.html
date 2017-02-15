@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css"/>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/index.js") }}"></script>
+    <script>
+        window.onload = function () {
+            util.nav(1)
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="w1200"><p class="nav_p"></p></div>
+		<div class="w1200 clear mt10">
+{#			<div class="w176 fl">#}
+{#				<div class="nav_new">#}
+{#					<div></div>#}
+{#					<p>捐赠详情</p>#}
+{#				</div>#}
+{#				<ul>#}
+{#					<li class="on"><a href="#">捐赠详情</a></li>#}
+{#				</ul>#}
+{#			</div>#}
+			<div class="w1001 fr">
+				<p class="w1001_p">捐赠详情</p>
+                <div class="am-g">
+                <div class="am-u-sm-12" style="width: 100%;height: 100%;">
+                    <form style="font-weight: 300;">
+                        <table  borderColor=#ddd border=1 cellSpacing=0 border="1px solid blue;" style="margin: 50px auto;font-family: '微软雅黑 ';">
+                            <thead>
+                            <tr style="width: 100%;">
+{#                                <th style="width: 200px;">系别</th>#}
+{#                                <th class="table-type" style="width: 150px;">用户名</th>#}
+                                <th style="width: 350px;">捐赠企业</th>
+                                <th style="width: 150px;">捐赠金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in donation %}
+                                <tr>
+{#                                    <th>{{ user.username }}</th>#}
+                                    <th>{{ user.company }}</th>
+                                    <th>{{ user.money }}</th>
+{#                                    <th>{{ user.money }}</th>#}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+            </div>
+
+			</div>
+		</div>
+    <style>
+        th {text-align: center;  padding: 10px;}
+    </style>
+{% endblock %}
